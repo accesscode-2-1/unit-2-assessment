@@ -3,6 +3,7 @@
     1. ListView (@shurane)
         - tiles using these colors, looping 500 times only:
 
+            ```
             // from lonelyplanet
             #142b44
             #1d508d
@@ -14,6 +15,7 @@
             #ffc83f
             #fa5e5b
             #bf538d
+            ```
 
         - ListView exists
         - ListView has certain layout properties
