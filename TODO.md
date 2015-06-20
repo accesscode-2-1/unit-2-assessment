@@ -7,6 +7,7 @@
         - ListView has certain layout properties
     2. ArrayAdapters
     3. Network call
+        - Maybe some sort of timed test (ensure things are off UI thread)
     4. API use (flickr API again?)
         - when API is up
         - when API is down
