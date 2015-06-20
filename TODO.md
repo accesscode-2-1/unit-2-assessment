@@ -37,5 +37,6 @@
         - updating the same notification (instead of creating new ones)
         - with photo
         - with buttons
-    7. Extend one of the existing Views
+    7. Extend one of the existing Views for Inheritance
         - probably an extension of ListView that includes indexing or toasting when element is clicked
+        - or a variant of a ListView that takes a `(List<Color> colors, int length)` and provides `length` tiles, just like in #1
