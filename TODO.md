@@ -23,7 +23,8 @@
     2. ArrayAdapters (@shurane)
         - Override Object.toString()
     3. Network call (@amyquispe)
-        - Maybe some sort of timed test (ensure things are off UI thread)
+		  - Maybe some sort of timed test (ensure things are off UI thread)
+		  - http://www.mdswanson.com/blog/2013/12/16/reliable-android-http-testing-with-retrofit-and-mockito.html
     4. API use (flickr API again?) (@amyquispe)
         - when API is up
         - when API is delayed over NetworkTimeout (but not down)
