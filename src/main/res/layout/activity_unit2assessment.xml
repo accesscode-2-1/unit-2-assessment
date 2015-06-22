@@ -1,0 +1,23 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="nyc.c4q.Unit2AssessmentActivity">
+
+    <Button
+        android:id="@+id/listViewActivity"
+        android:text="ListViewActivity"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/networkActivity"
+        android:text="NetworkActivity"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/listViewActivity"/>
+
+</RelativeLayout>

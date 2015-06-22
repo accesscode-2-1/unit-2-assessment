@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          android:versionCode="2"
-          android:versionName="1.0.0-SNAPSHOT"
-          package="nyc.c4q">
+    package="nyc.c4q"
+    android:versionCode="2"
+    android:versionName="1.0.0-SNAPSHOT" >
 
-    <application android:name=".Unit2AssessmentApplication">
-        <activity android:name=".Unit2AssessmentActivity" android:screenOrientation="portrait">
+    <application android:name=".Unit2AssessmentApplication" >
+        <activity
+            android:name=".Unit2AssessmentActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ListViewActivity">
+        </activity>
+        <activity
+            android:name=".NetworkActivity">
+        </activity>
     </application>
+
 </manifest>

@@ -1,7 +1,7 @@
 
 1. find out what tests to write
-    1. ListView (@shurane)
-        - tiles using these colors, looping 500 times only:
+    1. [ ] ListView (@shurane)
+        - [x] tiles using these colors, looping x times only:
 
             ```
             // from lonelyplanet
@@ -17,11 +17,13 @@
             #bf538d
             ```
 
-        - ListView exists
-        - ListView has certain layout properties
-        - when clicked, it should invert its color
-    2. ArrayAdapters (@shurane)
-        - Override Object.toString()
+        - [x] ListView has certain layout properties
+            - [x] height of row should be configurable
+        - [ ] when clicked, it should invert its color
+        - [x] create it in 2 stages
+            - [x] first level elements first
+            - [x] second level elements afterwards
+    2. [x] write a custom Adapter that extends `ArrayAdapter/BaseAdapter` (@shurane)
     3. Network call (@amyquispe)
 		  - Maybe some sort of timed test (ensure things are off UI thread)
 		  - http://www.mdswanson.com/blog/2013/12/16/reliable-android-http-testing-with-retrofit-and-mockito.html
@@ -43,3 +45,5 @@
     7. Extend one of the existing Views for Inheritance (@shurane)
         - probably an extension of ListView that includes indexing or toasting when element is clicked
         - or a variant of a ListView that takes a `(List<Color> colors, int length)` and provides `length` tiles, just like in #1
+
+- use travis-ci to generate and collect test reports
