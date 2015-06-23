@@ -11,7 +11,7 @@ public class Unit2AssessmentActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.deckard);
-    FlickrService service = new FlickrService();
-    FlickrResponse response = service.GetInterestingPhotos(10, 10);
+    //FlickrService service = new FlickrService();
+    //FlickrResponse response = service.GetInterestingPhotos(10, 10);
   }
 }
