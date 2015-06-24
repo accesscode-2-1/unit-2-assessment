@@ -4,7 +4,9 @@
           android:versionName="1.0.0-SNAPSHOT"
           package="nyc.c4q">
 
-    <application android:name=".Unit2AssessmentApplication">
+  <uses-permission android:name="android.permission.INTERNET" />
+
+  <application android:name=".Unit2AssessmentApplication">
         <activity android:name=".Unit2AssessmentActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -12,4 +14,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

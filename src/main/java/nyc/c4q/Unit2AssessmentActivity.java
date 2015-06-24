@@ -1,17 +1,43 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import nyc.c4q.R;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class Unit2AssessmentActivity extends Activity {
+
+  private static final String TAG = "TAG";
+
+  private FlickrResponse flickrResponse;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.deckard);
-    //FlickrService service = new FlickrService();
-    //FlickrResponse response = service.GetInterestingPhotos(10, 10);
+    new Task().execute();
+  }
+
+  class Task extends AsyncTask<Void, Void, Void> {
+
+    @Override protected Void doInBackground(Void... params) {
+      FlickrService service = new FlickrService();
+      service.GetInterestingPhotos(10, 10, new Callback<FlickrResponse>() {
+        @Override public void success(FlickrResponse flickrResponse, Response response) {
+          Log.d(TAG, "got flickerResponse " + flickrResponse);
+        }
+
+        @Override public void failure(RetrofitError error) {
+          if (error.getKind() == RetrofitError.Kind.NETWORK) {
+
+          }
+        }
+      });
+      return null;
+    }
   }
 }

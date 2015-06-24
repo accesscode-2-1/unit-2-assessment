@@ -19,13 +19,13 @@ public class FlickrService {
 	public static final String API_KEY = "123eee6ea239416da1e9c05d7d192c46";
 	private static final String TAG = "FlickrService";
 
-	public FlickrResponse GetInterestingPhotos(@Query("per_page") int perPage, @Query("page") int page) {
-		return getFlickrServiceInterface().getInterestingPhotos(perPage, page);
+	public void GetInterestingPhotos(@Query("per_page") int perPage, @Query("page") int page, Callback<FlickrResponse> callback) {
+		getFlickrServiceInterface().getInterestingPhotos(perPage, page, callback);
 	}
 
 	public interface Flickr {
 		@GET("/services/rest/?method=flickr.interestingness.getList")
-		FlickrResponse getInterestingPhotos(@Query("per_page") int perPage, @Query("page") int page);
+		void getInterestingPhotos(@Query("per_page") int perPage, @Query("page") int page, Callback<FlickrResponse> callback);
 	}
 
 	protected Flickr getFlickrServiceInterface() {
