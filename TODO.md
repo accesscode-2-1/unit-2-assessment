@@ -25,8 +25,23 @@
             - [x] second level elements afterwards
     2. [x] write a custom Adapter that extends `ArrayAdapter/BaseAdapter` (@shurane)
     3. Network call (@amyquispe)
-		  - Maybe some sort of timed test (ensure things are off UI thread)
-		  - http://www.mdswanson.com/blog/2013/12/16/reliable-android-http-testing-with-retrofit-and-mockito.html
+        - Maybe some sort of timed test (ensure things are off UI thread)
+        - http://www.mdswanson.com/blog/2013/12/16/reliable-android-http-testing-with-retrofit-and-mockito.html
+        - HTTP GET request we'll be using: `https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don%27t+ask+any+questions.`
+        - HTTP POST request we'll be using:
+
+            ```
+            curl -X POST \
+                -d "custname=james dean" \
+                -d "custtel=347-8431-6090" \
+                -d "custemail=hello@c4q.nyc" \
+                -d "size=small" \
+                -d "topping=cheese" \
+                -d "delivery=22:15" \
+                -d "comments=Leave it by the garage door. Don't ask any questions." \
+                https://httpbin.org/post
+            ```
+
     4. API use (flickr API again?) (@amyquispe)
         - when API is up
         - when API is delayed over NetworkTimeout (but not down)

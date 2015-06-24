@@ -6,10 +6,26 @@
     tools:context="nyc.c4q.NetworkActivity">
 
     <Button
-        android:id="@+id/networkCall"
-        android:text="Network Call"
+        android:id="@+id/httpbinget"
+        android:text="https://httpbin.org/get"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/httpbinpost"
+        android:text="https://httpbin.org/post"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/httpbinget"/>
+
+    <TextView
+        android:id="@+id/httptextlog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/httpbinpost"
+        android:layout_alignParentBottom="true"
+        android:text="No HTTP response"
+        android:typeface="monospace" />
 
 </RelativeLayout>

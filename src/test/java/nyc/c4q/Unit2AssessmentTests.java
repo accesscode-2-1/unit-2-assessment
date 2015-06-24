@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -41,6 +42,9 @@ public class Unit2AssessmentTests {
     private ActivityController<ListViewActivity> listViewActivityController;
     private Activity listViewActivity;
 
+    private ActivityController<NetworkActivity> networkActivityController;
+    private Activity networkActivity;
+
     @Before
     public void setUp() {
         activityController = Robolectric.buildActivity(Unit2AssessmentActivity.class);
@@ -50,6 +54,11 @@ public class Unit2AssessmentTests {
         listViewActivityController = Robolectric.buildActivity(ListViewActivity.class);
         listViewActivityController.setup();
         listViewActivity = listViewActivityController.get();
+
+        networkActivityController = Robolectric.buildActivity(NetworkActivity.class);
+        networkActivityController.setup();
+        networkActivity = networkActivityController.get();
+
     }
 
     @Test
@@ -170,6 +179,47 @@ public class Unit2AssessmentTests {
         adapterCount.setText("30");
         adapterCount.setText("zxcv");
         assertThat(adapter.getCount(), equalTo(30));
+    }
+
+    @Test
+    public void test11NetworkActivityHTTPUrlConnectionGET() {
+        Button httpbinget = (Button) Helpers.findViewByIdString(networkActivity, "httpbinget");
+        TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
+        httpbinget.callOnClick();
+        String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
+
+        assertThat(httptextlog).containsText(urlParams);
+    }
+
+    @Test
+    public void test12NetworkActivityHTTPUrlConnectionPOST() {
+        Button httpbinpost = (Button) Helpers.findViewByIdString(networkActivity, "httpbinpost");
+        TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
+        httpbinpost.callOnClick();
+
+        // TODO figure out a less hacky way to verify the contents of the JSON response.
+        assertThat(httptextlog).containsText("\"comments\": \"Leave it by the garage door. Don't ask any questions.\"");
+        assertThat(httptextlog).containsText("\"custemail\": \"hello@c4q.nyc\"");
+        assertThat(httptextlog).containsText("\"custname\": \"james dean\"");
+        assertThat(httptextlog).containsText("\"custtel\": \"347-841-6090\"");
+        assertThat(httptextlog).containsText("\"delivery\": \"18:15\"");
+        assertThat(httptextlog).containsText("\"size\": \"small\"");
+        assertThat(httptextlog).containsText("\"topping\": \"cheese\"");
+    }
+
+    @Test
+    public void test13NetworkActivityHTTPUrlConnectionGETRateLimit() {
+
+    }
+
+    @Test
+    public void test14NetworkActivityHTTPUrlConnectionGETTimeout() {
+
+    }
+
+    @Test
+    public void test15NetworkActivityREST() {
+
     }
 
     @Test
