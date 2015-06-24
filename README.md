@@ -1,5 +1,4 @@
 ## Unit 2 Assessment Test
-
 This is designed to run with Android Studio with
 [Unit Testing support](https://sites.google.com/a/android.com/tools/tech-docs/unit-testing-support) enabled in Android Studio's Gradle settings.
 
@@ -11,5 +10,5 @@ To run the test , open Android Studio's [Build Variants](https://sites.google.co
 
 Your run configuration should look like this:
 
-> ![](static/TODO).
+> ![](static/run.configuration.png).
 
