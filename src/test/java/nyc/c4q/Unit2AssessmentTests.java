@@ -52,13 +52,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 		activity = activityController.get();
 	}
 
-	@Test public void buttonExists() {
-		activityController.create();
-		assertThat(activity).isNotNull();
-		Button button = (Button) activity.findViewById(R.id.button);
-		assertNotNull("(@+id/button) should not be null", button);
-	}
-
 	@Test public void getOnMainCrashes() throws IOException {
 		try {
 			new FlickrService().getFlickrServiceInterface()
@@ -78,10 +71,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 	}
 
 	@Test public void ApiKeyExists() {
-		// TODO
-	}
-
-	@Test public void AsyncTaskExecutesWith() {
 		// TODO
 	}
 
