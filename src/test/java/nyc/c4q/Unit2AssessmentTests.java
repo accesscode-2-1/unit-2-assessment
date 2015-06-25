@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.*;
+import android.os.Process;
 import android.widget.Button;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import nyc.c4q.model.FlickrResponse;
 import nyc.c4q.rest.APIManager;
 import nyc.c4q.rest.FlickrService;
 import nyc.c4q.rest.MockFlickrService;
+
+import org.assertj.core.api.Assertions;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -24,6 +28,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.robolectric.AndroidManifest;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -51,7 +56,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 //import static org.hamcrest.Matchers.equalTo;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "src/main/AndroidManifest.xml", emulateSdk = 18) public class Unit2AssessmentTests {
+@Config(manifest = "src/main/AndroidManifest.xml", emulateSdk = 18)
+public class Unit2AssessmentTests {
 
 	@Mock private FlickrService flickrService;
 
@@ -91,11 +97,10 @@ import static org.mockito.MockitoAnnotations.initMocks;
 	}
 
 	@Test public void appHasInternetPermission() {
-		Context testContext = Robolectric.getShadowApplication().getApplicationContext();
-		PackageManager pm = testContext.getPackageManager();
-		int expected = PackageManager.PERMISSION_GRANTED;
-		int actual = pm.checkPermission(Manifest.permission.INTERNET, testContext.getPackageName());
-		assertEquals(expected, actual);
+        AndroidManifest manifest = Robolectric.getShadowApplication().getAppManifest();
+        List<String> usedPermissions = manifest.getUsedPermissions();
+
+        Assertions.assertThat(usedPermissions).contains(Manifest.permission.INTERNET);
 	}
 
 	@Test public void ApiKeyExists() {
