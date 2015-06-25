@@ -103,7 +103,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 	}
 
 	@Test public void shouldReturnSomePhotos() {
-		Mockito.verify(flickrService).getInterestingPhotos(Mockito.anyInt(), MockFlickrService.PAGE_0, new Callback<FlickrResponse>() {
+		flickrService.getInterestingPhotos(Mockito.anyInt(), MockFlickrService.PAGE_0, new Callback<FlickrResponse>() {
 			@Override public void success(FlickrResponse flickrResponse, Response response) {
 				assertThat(flickrResponse.mPhotosInfo.mPhotos).isNotEmpty();
 			}
@@ -115,7 +115,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 	}
 
 	@Test public void shouldReturnNoPhotos() {
-		Mockito.verify(flickrService).getInterestingPhotos(Mockito.anyInt(), MockFlickrService.PAGE_2, new Callback<FlickrResponse>() {
+		flickrService.getInterestingPhotos(Mockito.anyInt(), MockFlickrService.PAGE_2, new Callback<FlickrResponse>() {
 			@Override public void success(FlickrResponse flickrResponse, Response response) {
 				assertThat(flickrResponse.mPhotosInfo.mPhotos).isEmpty();
 			}

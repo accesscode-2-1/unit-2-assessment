@@ -43,6 +43,7 @@ public class MockFlickrService implements FlickrService {
 			FlickrResponse res = new FlickrResponse();
 			res.mStatus = "ok";
 			res.mPhotosInfo = new PhotosInfo();
+			res.mPhotosInfo.mPhotos = EMPTY_LIST;
 			res.mPhotosInfo.mPage = 0;
 			res.mPhotosInfo.mPages = 0;
 			res.mPhotosInfo.mPerPage = perPage;
