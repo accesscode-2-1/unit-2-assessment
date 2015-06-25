@@ -1,8 +1,9 @@
-package nyc.c4q;
+package nyc.c4q.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import nyc.c4q.model.Photo;
 
 public class PhotosInfo {
 

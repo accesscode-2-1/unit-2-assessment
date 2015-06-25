@@ -39,6 +39,7 @@ dependencies {
     testCompile 'com.squareup.retrofit:retrofit-mock:1.9.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
+    testCompile 'com.squareup:fest-android:1.0.8'
 
     // Espresso
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.0')

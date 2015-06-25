@@ -1,10 +1,11 @@
-package nyc.c4q;
+package nyc.c4q.model;
 
 /**
  * Created by cfalc on 6/21/15.
  */
 
 import com.google.gson.annotations.SerializedName;
+import nyc.c4q.model.PhotosInfo;
 
 public class FlickrResponse {
 

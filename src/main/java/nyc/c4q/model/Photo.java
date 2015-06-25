@@ -1,4 +1,4 @@
-package nyc.c4q;
+package nyc.c4q.model;
 
 /**
  * Created by cfalc on 6/21/15.
