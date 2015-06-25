@@ -1,23 +1,8 @@
 package nyc.c4q;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.*;
-import android.os.Process;
-import android.widget.Button;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executor;
-import nyc.c4q.model.FlickrResponse;
-import nyc.c4q.rest.APIManager;
-import nyc.c4q.rest.FlickrService;
-import nyc.c4q.rest.MockFlickrService;
 
 import org.assertj.core.api.Assertions;
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -27,15 +12,21 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.robolectric.AndroidManifest;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowActivity;
-import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowToast;
-import org.robolectric.util.ActivityController;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executor;
+
+import nyc.c4q.model.FlickrResponse;
+import nyc.c4q.rest.APIManager;
+import nyc.c4q.rest.FlickrService;
+import nyc.c4q.rest.MockFlickrService;
 import retrofit.Callback;
 import retrofit.MockRestAdapter;
 import retrofit.RestAdapter;
@@ -44,18 +35,12 @@ import retrofit.client.Header;
 import retrofit.client.Response;
 import retrofit.converter.ConversionException;
 
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
-import static org.fest.assertions.api.Assertions.assertThat;
-
-import static org.assertj.android.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
-//import static org.hamcrest.Matchers.equalTo;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) @RunWith(RobolectricTestRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(RobolectricTestRunner.class)
 @Config(manifest = "src/main/AndroidManifest.xml", emulateSdk = 18)
 public class Unit2AssessmentTests {
 
@@ -100,7 +85,7 @@ public class Unit2AssessmentTests {
         AndroidManifest manifest = Robolectric.getShadowApplication().getAppManifest();
         List<String> usedPermissions = manifest.getUsedPermissions();
 
-        Assertions.assertThat(usedPermissions).contains(Manifest.permission.INTERNET);
+        assertThat(usedPermissions).contains(Manifest.permission.INTERNET);
 	}
 
 	@Test public void ApiKeyExists() {
@@ -135,7 +120,7 @@ public class Unit2AssessmentTests {
 		Mockito.verify(flickrService).getInterestingPhotos(Mockito.anyInt(), Mockito.anyInt(), actionCaptor.capture());
 		RetrofitError error = RetrofitError.networkError(null, new IOException("Network Error"));
 		actionCaptor.getValue().failure(error);
-		assertThat(ShadowToast.getTextOfLatestToast(), CoreMatchers.containsString("Network Error"));
+		assertThat(ShadowToast.getTextOfLatestToast()).isEqualTo("Network Error");
 	}
 
 	@Test public void getToastsIfHttpError() {
@@ -143,14 +128,14 @@ public class Unit2AssessmentTests {
 		RetrofitError error = RetrofitError.httpError(null,
 				new Response("", 404, "Page not found", new ArrayList<Header>(), null), null, null);
 		actionCaptor.getValue().failure(error);
-		assertThat(ShadowToast.getTextOfLatestToast(), CoreMatchers.containsString("Http Error"));
+		assertThat(ShadowToast.getTextOfLatestToast()).isEqualTo("Http Error");
 	}
 
 	@Test public void getToastsIfConversionError() {
 		Mockito.verify(flickrService).getInterestingPhotos(Mockito.anyInt(), Mockito.anyInt(), actionCaptor.capture());
 		RetrofitError error = RetrofitError.conversionError(null, null, null, null, new ConversionException("Conversion Error"));
 		actionCaptor.getValue().failure(error);
-		assertThat(ShadowToast.getTextOfLatestToast(), CoreMatchers.containsString("Conversion Error"));
+		assertThat(ShadowToast.getTextOfLatestToast()).isEqualTo("Conversion Error");
 	}
 
 	@Test public void getRethrowsUnexpectedError() throws Exception {
