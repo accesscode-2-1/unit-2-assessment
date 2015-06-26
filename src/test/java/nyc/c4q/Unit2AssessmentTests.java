@@ -105,6 +105,7 @@ public class Unit2AssessmentTests {
         res.mPhotosInfo.mPhotos = EMPTY_LIST;
         actionCaptor.getValue().success(res, null);
         assertEquals(activity.getListAdapter().getCount(), 0);
+        assertThat(ShadowToast.getTextOfLatestToast()).isEqualTo("No Photos");
     }
 
     @Test
