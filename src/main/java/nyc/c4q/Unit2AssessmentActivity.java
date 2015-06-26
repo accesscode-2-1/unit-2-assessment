@@ -1,9 +1,11 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 import nyc.c4q.model.FlickrResponse;
 import nyc.c4q.rest.APIManager;
 import nyc.c4q.rest.FlickrService;
@@ -19,12 +21,12 @@ public class Unit2AssessmentActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.deckard);
-    new Task().execute();
+    new Task().execute(this);
   }
 
-  class Task extends AsyncTask<Void, Void, Void> {
+  public class Task extends AsyncTask<Context, Void, Void> {
 
-    @Override protected Void doInBackground(Void... params) {
+    @Override protected Void doInBackground(final Context... params) {
       APIManager.getFlickrService().getInterestingPhotos(10, 10, new Callback<FlickrResponse>() {
         @Override public void success(FlickrResponse flickrResponse, Response response) {
           Log.d(TAG, "got flickerResponse " + flickrResponse);
@@ -32,11 +34,12 @@ public class Unit2AssessmentActivity extends Activity {
 
         @Override public void failure(RetrofitError error) {
           if (error.getKind() == RetrofitError.Kind.NETWORK) {
-
+            Toast.makeText(params[0], "Network Error", Toast.LENGTH_SHORT).show();
           }
         }
       });
       return null;
     }
+
   }
 }

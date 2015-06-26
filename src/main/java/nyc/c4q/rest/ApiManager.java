@@ -1,10 +1,14 @@
 package nyc.c4q.rest;
 
+import android.os.AsyncTask;
+import android.os.Looper;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.concurrent.Executor;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.android.MainThreadExecutor;
 import retrofit.converter.GsonConverter;
 
 /**
@@ -29,8 +33,7 @@ public class APIManager {
 		// Create a very simple REST adapter which points the Flickr API endpoint.
 		RestAdapter retrofit = new RestAdapter.Builder()
 				.setEndpoint(API_URL)
-				.setConverter(new GsonConverter(gson))
-				.setRequestInterceptor(new RequestInterceptor() {
+				.setConverter(new GsonConverter(gson)).setRequestInterceptor(new RequestInterceptor() {
 					@Override public void intercept(RequestInterceptor.RequestFacade request) {
 						request.addQueryParam("api_key", API_KEY);
 						request.addQueryParam("format", "json");
@@ -50,4 +53,5 @@ public class APIManager {
 		}
 		return apiManager.flickrService;
 	}
+
 }
