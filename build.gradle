@@ -47,6 +47,9 @@ dependencies {
     // relevant: https://github.com/square/assertj-android/issues/129
     compile 'com.squareup.assertj:assertj-android:1.0.0'
 
+    // better version of Java's HttpURLConnection
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+
     // TODO: requires special build of robolectric right now. working on this...
     testCompile('org.robolectric:robolectric:2.4') {
         exclude module: 'classworlds'

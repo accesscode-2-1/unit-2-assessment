@@ -18,12 +18,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/httpbinget"/>
+    <Button
+        android:id="@+id/httpbingetokhttp"
+        android:text="https://httpbin.org/get okhttp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/httpbinpost"/>
+    <Button
+        android:id="@+id/httpbinpostokhttp"
+        android:text="https://httpbin.org/post okhttp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/httpbingetokhttp"/>
+    <Button
+        android:id="@+id/cleartextlog"
+        android:text="clear text log"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/httpbinpostokhttp"/>
 
     <TextView
         android:id="@+id/httptextlog"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/httpbinpost"
+        android:layout_below="@id/cleartextlog"
         android:layout_alignParentBottom="true"
         android:text="No HTTP response"
         android:typeface="monospace" />

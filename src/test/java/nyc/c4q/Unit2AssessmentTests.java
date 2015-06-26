@@ -1,5 +1,6 @@
 package nyc.c4q;
 
+import android.Manifest;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,14 +19,17 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.robolectric.AndroidManifest;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.util.ActivityController;
 
-import static junit.framework.Assert.assertTrue;
-import static org.assertj.android.api.Assertions.assertThat;
+import java.net.URLDecoder;
+import java.util.List;
 
+import static org.assertj.android.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -181,45 +185,33 @@ public class Unit2AssessmentTests {
         assertThat(adapter.getCount(), equalTo(30));
     }
 
+    // ======================= NETWORK TESTS =============================
+    static final String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
+
     @Test
-    public void test11NetworkActivityHTTPUrlConnectionGET() {
+    public void test11AppHasInternetPermissions() {
+        AndroidManifest manifest = Robolectric.getShadowApplication().getAppManifest();
+        List<String> usedPermissions = manifest.getUsedPermissions();
+        assertThat(usedPermissions, hasItem(Manifest.permission.INTERNET));
+    }
+
+    @Test
+    public void test12NetworkActivityHTTPUrlConnectionGET() {
         Button httpbinget = (Button) Helpers.findViewByIdString(networkActivity, "httpbinget");
         TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
         httpbinget.callOnClick();
-        String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
 
         assertThat(httptextlog).containsText(urlParams);
     }
 
     @Test
-    public void test12NetworkActivityHTTPUrlConnectionPOST() {
-        Button httpbinpost = (Button) Helpers.findViewByIdString(networkActivity, "httpbinpost");
+    public void test13NetworkActivityHTTPUrlConnectionGETOKHTTP() throws Exception {
+        Button httpbingetokhttp = (Button) Helpers.findViewByIdString(networkActivity, "httpbingetokhttp");
         TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
-        httpbinpost.callOnClick();
+        httpbingetokhttp.callOnClick();
 
-        // TODO figure out a less hacky way to verify the contents of the JSON response.
-        assertThat(httptextlog).containsText("\"comments\": \"Leave it by the garage door. Don't ask any questions.\"");
-        assertThat(httptextlog).containsText("\"custemail\": \"hello@c4q.nyc\"");
-        assertThat(httptextlog).containsText("\"custname\": \"james dean\"");
-        assertThat(httptextlog).containsText("\"custtel\": \"347-841-6090\"");
-        assertThat(httptextlog).containsText("\"delivery\": \"18:15\"");
-        assertThat(httptextlog).containsText("\"size\": \"small\"");
-        assertThat(httptextlog).containsText("\"topping\": \"cheese\"");
-    }
-
-    @Test
-    public void test13NetworkActivityHTTPUrlConnectionGETRateLimit() {
-
-    }
-
-    @Test
-    public void test14NetworkActivityHTTPUrlConnectionGETTimeout() {
-
-    }
-
-    @Test
-    public void test15NetworkActivityREST() {
-
+        String replaced = urlParams.replaceAll("\\+"," ");
+        assertThat(httptextlog).containsText(replaced);
     }
 
     @Test
@@ -254,4 +246,38 @@ public class Unit2AssessmentTests {
 //            }
 //        }
 //    }
+
+    @Test
+    public void testBonus03NetworkActivityHTTPUrlConnectionPOST() {
+        Button httpbinpost = (Button) Helpers.findViewByIdString(networkActivity, "httpbinpost");
+        TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
+        httpbinpost.callOnClick();
+
+        // TODO figure out a less hacky way to verify the contents of the JSON response.
+        assertThat(httptextlog).containsText("\"data\": \"\"");
+        assertThat(httptextlog).containsText("\"comments\": \"Leave it by the garage door. Don't ask any questions.\"");
+        assertThat(httptextlog).containsText("\"custemail\": \"hello@c4q.nyc\"");
+        assertThat(httptextlog).containsText("\"custname\": \"james dean\"");
+        assertThat(httptextlog).containsText("\"custtel\": \"347-841-6090\"");
+        assertThat(httptextlog).containsText("\"delivery\": \"18:15\"");
+        assertThat(httptextlog).containsText("\"size\": \"small\"");
+        assertThat(httptextlog).containsText("\"topping\": \"cheese\"");
+    }
+
+    @Test
+    public void testBonus04NetworkActivityHTTPUrlConnectionGETOKPOST() {
+        Button httpbinpostokhttp = (Button) Helpers.findViewByIdString(networkActivity, "httpbinpostokhttp");
+        TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
+        httpbinpostokhttp.callOnClick();
+
+        // TODO figure out a less hacky way to verify the contents of the JSON response.
+        assertThat(httptextlog).containsText("\"data\": \"\"");
+        assertThat(httptextlog).containsText("\"comments\": \"Leave it by the garage door. Don't ask any questions.\"");
+        assertThat(httptextlog).containsText("\"custemail\": \"hello@c4q.nyc\"");
+        assertThat(httptextlog).containsText("\"custname\": \"james dean\"");
+        assertThat(httptextlog).containsText("\"custtel\": \"347-841-6090\"");
+        assertThat(httptextlog).containsText("\"delivery\": \"18:15\"");
+        assertThat(httptextlog).containsText("\"size\": \"small\"");
+        assertThat(httptextlog).containsText("\"topping\": \"cheese\"");
+    }
 }
