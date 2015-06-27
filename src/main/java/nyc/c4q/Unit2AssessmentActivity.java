@@ -19,6 +19,7 @@ public class Unit2AssessmentActivity extends Activity {
         Button networkActivityButton = (Button) findViewById(R.id.networkActivity);
         Button jsonActivityButton = (Button) findViewById(R.id.jsonActivity);;
         Button notificationActivityButton = (Button) findViewById(R.id.notificationActivity);
+        Button apiActivityButton = (Button) findViewById(R.id.apiActivity);
 
         listViewActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,5 +53,12 @@ public class Unit2AssessmentActivity extends Activity {
             }
         });
 
+        apiActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Unit2AssessmentActivity.this, APIActivity.class);
+                Unit2AssessmentActivity.this.startActivity(intent);
+            }
+        });
     }
 }
