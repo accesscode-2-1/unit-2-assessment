@@ -2,6 +2,7 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,8 +10,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import nyc.c4q.json.Zipcode;
 
@@ -39,28 +45,20 @@ public class JSONActivity extends Activity {
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Zipcode z = new Zipcode();
-                Log.d(Unit2AssessmentActivity.TAG, _id.getText().toString());
-                z._id = _id.getText().toString();
-                z.pop = Integer.parseInt(pop.getText().toString());
-                z.city = city.getText().toString();
-                z.state = state.getText().toString();
-                z._lat = Double.parseDouble(_lat.getText().toString());
-                z._long = Double.parseDouble(_long.getText().toString());
-                z.loc = new double[]{z._lat,z._long};
-                Log.d(Unit2AssessmentActivity.TAG, z.toString());
-
-                zipcodes.add(z);
             }
         });
 
         savejson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Gson gson = new Gson();
-                String result = gson.toJson(zipcodes, Zipcode[].class);
             }
         });
 
+
+        loadjson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 }

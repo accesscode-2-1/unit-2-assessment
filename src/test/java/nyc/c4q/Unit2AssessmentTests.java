@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Environment;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +28,17 @@ import org.robolectric.AndroidManifest;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowEnvironment;
 import org.robolectric.util.ActivityController;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Collection;
 import java.util.List;
+import java.util.Scanner;
 
 import nyc.c4q.json.Zipcode;
 import nyc.c4q.json.ZipcodeDeserializer;
@@ -81,6 +88,9 @@ public class Unit2AssessmentTests {
         jsonActivityController.setup();
         jsonActivity = jsonActivityController.get();
     }
+
+
+    // ======================= LISTVIEW TESTS =============================
 
     @Test
     public void test01ListViewActvityCheckFirstLevelHas2Views() {
@@ -230,7 +240,21 @@ public class Unit2AssessmentTests {
         assertThat(httptextlog).containsText(replaced);
     }
 
-    public static final String JSON_ZIPCODE = "{ \"_id\" : \"11101\", \"city\" : \"ASTORIA\", \"loc\" : [ -73.939393, 40.750316 ], \"pop\" : 23142, \"state\" : \"NY\" }";
+    @Test
+    public void test14Missing() {
+        // TODO
+        // FREE question for now.
+    }
+
+    @Test
+    public void test15Missing() {
+        // TODO
+        // FREE question for now.
+    }
+
+    // ======================= JSON TESTS =============================
+    // C4Q's Zipcode.
+    public static final String JSON_ZIPCODE = "{\"_id\":\"11101\",\"city\":\"ASTORIA\",\"loc\":[-73.939393,40.750316],\"pop\":23142,\"state\":\"NY\"}";
 
     @Test
     public void test16CreateJSONMappingID() throws NoSuchFieldException, IllegalAccessException {
@@ -277,27 +301,28 @@ public class Unit2AssessmentTests {
         TextView _long = (TextView) jsonActivity.findViewById(R.id.fieldloclongvalue);
         Button addjson = (Button) jsonActivity.findViewById(R.id.addjson);
 
-        _id.setText("11102");
-        pop.setText(Integer.toString(1000));
-        city.setText("Miami");
-        state.setText("Florida");
-        _lat.setText("+25.46");
-        _long.setText("-80.11");
+        _id.setText("11101");
+        pop.setText("23142");
+        city.setText("ASTORIA");
+        state.setText("NY");
+        _lat.setText("-73.939393");
+        _long.setText("40.750316");
 
         addjson.callOnClick();
 
         //hack
         String result = gson.toJson(jsonActivity.zipcodes.get(0), Zipcode.class);
-        assertThat(result, containsString("\"_id\":\"11102\""));
-        assertThat(result, containsString("\"pop\":1000"));
-        assertThat(result, containsString("\"city\":\"Miami\""));
-        assertThat(result, containsString("\"state\":\"Florida\""));
-        assertThat(result, containsString("\"loc\":[25.46,-80.11]"));
+        assertThat(result, containsString("\"_id\":\"11101\""));
+        assertThat(result, containsString("\"pop\":23142"));
+        assertThat(result, containsString("\"city\":\"ASTORIA\""));
+        assertThat(result, containsString("\"state\":\"NY\""));
+        assertThat(result, containsString("\"loc\":[-73.939393,40.750316]"));
     }
 
     @Test
-    public void test25JSONActivityCheckSaveJSONButton() {
-        Gson gson = new Gson();
+    public void test20JSONActivityCheckSaveJSONButton() throws FileNotFoundException {
+        ShadowEnvironment.setExternalStorageState(Environment.MEDIA_MOUNTED);
+
         TextView _id = (TextView) jsonActivity.findViewById(R.id.field_idvalue);
         TextView pop = (TextView) jsonActivity.findViewById(R.id.fieldpopvalue);
         TextView city = (TextView) jsonActivity.findViewById(R.id.fieldcityvalue);
@@ -307,15 +332,49 @@ public class Unit2AssessmentTests {
         Button addjson = (Button) jsonActivity.findViewById(R.id.addjson);
         Button savejson = (Button) jsonActivity.findViewById(R.id.savejson);
 
-        _id.setText("11102");
-        pop.setText(Integer.toString(1000));
-        city.setText("Miami");
-        state.setText("Florida");
-        _lat.setText("+25.46");
-        _long.setText("-80.11");
+        _id.setText("11101");
+        pop.setText("23142");
+        city.setText("ASTORIA");
+        state.setText("NY");
+        _lat.setText("-73.939393");
+        _long.setText("40.750316");
 
         addjson.callOnClick();
         savejson.callOnClick();
+        File directory = jsonActivity.getExternalCacheDir();
+        File file = new File(directory, "zipcodes.json");
+        String results = new Scanner(file).useDelimiter("\\Z").next();
+
+        //hack
+        assertThat(results, containsString("\"_id\":\"11101\""));
+        assertThat(results, containsString("\"pop\":23142"));
+        assertThat(results, containsString("\"city\":\"ASTORIA\""));
+        assertThat(results, containsString("\"state\":\"NY\""));
+        assertThat(results, containsString("\"loc\":[-73.939393,40.750316]"));
+    }
+
+    @Test
+    public void test21JSONActivityCheckLoadJSONButton() throws IOException {
+        ShadowEnvironment.setExternalStorageState(Environment.MEDIA_MOUNTED);
+        Gson gson = new Gson();
+        Button loadjson = (Button) jsonActivity.findViewById(R.id.loadjson);
+
+        File directory = jsonActivity.getExternalCacheDir();
+        File file = new File(directory, "zipcodes.json");
+
+        FileWriter fileWriter = new FileWriter(file, false);
+        fileWriter.write(String.format("[%s]",JSON_ZIPCODE));
+        fileWriter.close();
+
+        loadjson.callOnClick();
+
+        String result = gson.toJson(jsonActivity.zipcodes.get(0), Zipcode.class);
+
+        assertThat(result, containsString("\"_id\":\"11101\""));
+        assertThat(result, containsString("\"pop\":23142"));
+        assertThat(result, containsString("\"city\":\"ASTORIA\""));
+        assertThat(result, containsString("\"state\":\"NY\""));
+        assertThat(result, containsString("\"loc\":[-73.939393,40.750316]"));
     }
 
 
@@ -386,7 +445,8 @@ public class Unit2AssessmentTests {
         assertThat(httptextlog).containsText("\"topping\": \"cheese\"");
     }
 
-    public void testBonus06CreateJSONMappingLatlong() throws NoSuchFieldException, IllegalAccessException {
+    @Test
+    public void testBonus05CreateJSONMappingLatlong() throws NoSuchFieldException, IllegalAccessException {
         Gson gson = new GsonBuilder().registerTypeAdapter(Zipcode.class, new ZipcodeDeserializer()).create();
         Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
 
