@@ -1,7 +1,9 @@
 package nyc.c4q;
 
 import android.Manifest;
-import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
@@ -17,7 +19,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -29,14 +30,14 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowEnvironment;
+import org.robolectric.shadows.ShadowNotification;
+import org.robolectric.shadows.ShadowNotificationManager;
 import org.robolectric.util.ActivityController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -64,11 +65,16 @@ public class Unit2AssessmentTests {
     private ActivityController<ListViewActivity> listViewActivityController;
     private ListViewActivity listViewActivity;
 
+    private ActivityController<NetworkActivity> networkActivityController;
+    private NetworkActivity networkActivity;
+
     private ActivityController<JSONActivity> jsonActivityController;
     private JSONActivity jsonActivity;
 
-    private ActivityController<NetworkActivity> networkActivityController;
-    private Activity networkActivity;
+    private ActivityController<NotificationActivity> notificationActivityController;
+    private NotificationActivity notificationActivity;
+
+    private NotificationManager notificationManager;
 
     @Before
     public void setUp() {
@@ -87,6 +93,11 @@ public class Unit2AssessmentTests {
         jsonActivityController = Robolectric.buildActivity(JSONActivity.class);
         jsonActivityController.setup();
         jsonActivity = jsonActivityController.get();
+
+        notificationActivityController = Robolectric.buildActivity(NotificationActivity.class);
+        notificationActivityController.setup();
+        notificationActivity = notificationActivityController.get();
+        notificationManager = (NotificationManager) Robolectric.application.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
 
@@ -371,6 +382,89 @@ public class Unit2AssessmentTests {
         assertThat(result, containsString("\"loc\":[-73.939393,40.750316]"));
     }
 
+    @Test
+    public void test21NotificationActivityCreateAutoCancelNotification(){
+
+        Button autocancelnotification = (Button) notificationActivity.findViewById(R.id.autocancelnotification);
+
+        autocancelnotification.callOnClick();
+        ShadowNotificationManager snm = Robolectric.shadowOf(notificationManager);
+
+        assertThat(snm.size(), equalTo(1));
+        ShadowNotification n = Robolectric.shadowOf(snm.getAllNotifications().get(0));
+
+        assertThat(n.getContentTitle().toString(), containsString("default@c4q.nyc"));
+        assertThat(n.getContentText().toString(), containsString("Touch me to dismiss me!"));
+        assertThat(n.getSmallIcon(), equalTo(R.drawable.c4qfavicon));
+
+        assertThat(n.getRealNotification().flags, equalTo(Notification.FLAG_AUTO_CANCEL));
+    }
+
+    @Test
+    public void test22NotificationActivityCreateSwipeNotification(){
+
+        Button swipenotification = (Button) notificationActivity.findViewById(R.id.swipenotification);
+
+        swipenotification.callOnClick();
+        ShadowNotificationManager snm = Robolectric.shadowOf(notificationManager);
+
+        assertThat(snm.size(), equalTo(1));
+        ShadowNotification n = Robolectric.shadowOf(snm.getAllNotifications().get(0));
+
+        assertThat(n.getContentTitle().toString(), containsString("swipe@c4q.nyc"));
+        assertThat(n.getContentText().toString(), containsString("Swipe right if you want to meet me. Otherwise, I'm not going away."));
+        assertThat(n.getSmallIcon(), equalTo(R.drawable.c4qfavicon));
+
+        assertThat(n.getRealNotification().flags, equalTo(0));
+    }
+
+    @Test
+    public void test23NotificationActivityCreatePermanentNotification(){
+
+        Button permanentnotification = (Button) notificationActivity.findViewById(R.id.permanentnotification);
+
+        permanentnotification.callOnClick();
+        ShadowNotificationManager snm = Robolectric.shadowOf(notificationManager);
+
+        assertThat(snm.size(), equalTo(1));
+        ShadowNotification n = Robolectric.shadowOf(snm.getAllNotifications().get(0));
+
+        assertThat(n.getContentTitle().toString(), containsString("permanent@c4q.nyc"));
+        assertThat(n.getContentText().toString(), containsString("I'm staying planted right here."));
+        assertThat(n.getSmallIcon(), equalTo(R.drawable.c4qfavicon));
+        assertThat(n.isOngoing(), equalTo(true));
+    }
+
+    @Test
+    public void test24NotificationActivityDismissPermanentNotification(){
+
+        Button permanentnotification = (Button) notificationActivity.findViewById(R.id.permanentnotification);
+        Button dismisspermanentnotification = (Button) notificationActivity.findViewById(R.id.dismisspermanentnotification);
+
+        permanentnotification.callOnClick();
+        ShadowNotificationManager snm = Robolectric.shadowOf(notificationManager);
+        assertThat(snm.size(), equalTo(1));
+
+        dismisspermanentnotification.callOnClick();
+        assertThat(snm.size(), equalTo(0));
+    }
+
+    @Test
+    public void test25NotificationActivityShowMultipleNotificationsAtTheSameTime(){
+
+        Button autocancelnotification = (Button) notificationActivity.findViewById(R.id.autocancelnotification);
+        Button swipenotification = (Button) notificationActivity.findViewById(R.id.swipenotification);
+        Button permanentnotification = (Button) notificationActivity.findViewById(R.id.permanentnotification);
+
+        ShadowNotificationManager snm = Robolectric.shadowOf(notificationManager);
+        assertThat(snm.size(), equalTo(0));
+        autocancelnotification.callOnClick();
+        assertThat(snm.size(), equalTo(1));
+        swipenotification.callOnClick();
+        assertThat(snm.size(), equalTo(2));
+        permanentnotification.callOnClick();
+        assertThat(snm.size(), equalTo(3));
+    }
 
     @Test
     public void testBonus01ListViewActivityCheckSecondLevelLayoutViewRowPadding() {
@@ -440,7 +534,7 @@ public class Unit2AssessmentTests {
     }
 
     @Test
-    public void testBonus05CreateJSONMappingLatlong() throws NoSuchFieldException, IllegalAccessException {
+    public void testBonus05JSONActivityCreateJSONMappingLatlong() throws NoSuchFieldException, IllegalAccessException {
         Gson gson = new GsonBuilder().registerTypeAdapter(Zipcode.class, new ZipcodeDeserializer()).create();
         Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
 
@@ -449,4 +543,27 @@ public class Unit2AssessmentTests {
         assertThat(((double) Zipcode.class.getField("_lat").get(z)), closeTo(-73.939393, 0.01));
         assertThat(((double) Zipcode.class.getField("_long").get(z)), closeTo(40.750316, 0.01));
     }
+
+    @Test
+    public void testBonus06NotificationActivityShowNotificationsWithID(){
+        ShadowNotificationManager snm = Robolectric.shadowOf(notificationManager);
+
+        notificationActivity.findViewById(R.id.autocancelnotification).callOnClick();
+        notificationActivity.findViewById(R.id.swipenotification).callOnClick();
+        notificationActivity.findViewById(R.id.permanentnotification).callOnClick();
+        notificationActivity.findViewById(R.id.buttonnotification).callOnClick();
+        assertThat(snm.getNotification(NotificationActivity.ID_AUTOCANCEL_NOTIFICATION), notNullValue());
+        assertThat(snm.getNotification(NotificationActivity.ID_SWIPE_NOTIFICATION), notNullValue());
+        assertThat(snm.getNotification(NotificationActivity.ID_PERMANENT_NOTIFICATION), notNullValue());
+        assertThat(snm.getNotification(NotificationActivity.ID_BUTTON_NOTIFICATION), notNullValue());
+    }
+
+    @Test
+    public void testBonus07NotificationActivityShowNotificationWithActions(){
+        Button buttonnotification = (Button) notificationActivity.findViewById(R.id.buttonnotification);
+        ShadowNotificationManager snm = Robolectric.shadowOf(notificationManager);
+        buttonnotification.callOnClick();
+        assertThat(snm.getAllNotifications().get(0).actions.length, equalTo(3));
+    }
+
 }
