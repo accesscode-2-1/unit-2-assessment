@@ -49,8 +49,10 @@
         - API information has been retrieved (use metadata?)
         - API information has been parsed correctly (JSON)
     5. flat file like JSON (@amyquispe)
+        - [x] create GSON mapping
+        - [x] serialize data correctly
+        - add row
         - store to file
-        - serialize data correctly
         - retrieve from file
     6. notifications (@amyquispe)
         - simple
@@ -62,3 +64,5 @@
         - or a variant of a ListView that takes a `(List<Color> colors, int length)` and provides `length` tiles, just like in #1
 
 - use travis-ci to generate and collect test reports
+- use styling for bigger textviews instead of `android:textAppearance="?android:attr/textAppearanceLarge"`
+

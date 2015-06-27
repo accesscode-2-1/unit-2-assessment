@@ -21,6 +21,9 @@
         <activity
             android:name=".NetworkActivity">
         </activity>
+        <activity
+        android:name=".JSONActivity">
+    </activity>
     </application>
 
 </manifest>

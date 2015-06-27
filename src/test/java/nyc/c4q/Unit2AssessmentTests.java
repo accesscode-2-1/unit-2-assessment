@@ -14,6 +14,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -26,13 +30,20 @@ import org.robolectric.annotation.Config;
 import org.robolectric.util.ActivityController;
 
 import java.net.URLDecoder;
+import java.util.Collection;
 import java.util.List;
+
+import nyc.c4q.json.Zipcode;
+import nyc.c4q.json.ZipcodeDeserializer;
 
 import static org.assertj.android.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -41,10 +52,13 @@ import static org.hamcrest.Matchers.notNullValue;
 public class Unit2AssessmentTests {
 
     private ActivityController<Unit2AssessmentActivity> activityController;
-    private Activity activity;
+    private Unit2AssessmentActivity activity;
 
     private ActivityController<ListViewActivity> listViewActivityController;
-    private Activity listViewActivity;
+    private ListViewActivity listViewActivity;
+
+    private ActivityController<JSONActivity> jsonActivityController;
+    private JSONActivity jsonActivity;
 
     private ActivityController<NetworkActivity> networkActivityController;
     private Activity networkActivity;
@@ -63,6 +77,9 @@ public class Unit2AssessmentTests {
         networkActivityController.setup();
         networkActivity = networkActivityController.get();
 
+        jsonActivityController = Robolectric.buildActivity(JSONActivity.class);
+        jsonActivityController.setup();
+        jsonActivity = jsonActivityController.get();
     }
 
     @Test
@@ -175,7 +192,6 @@ public class Unit2AssessmentTests {
         adapterCount.setText("wonk");
         assertThat(adapter.getCount(), equalTo(ListViewActivity.COLORS.length));
 
-
         adapterCount.setText("20");
         adapterCount.setText("fifteen");
         assertThat(adapter.getCount(), equalTo(20));
@@ -213,6 +229,95 @@ public class Unit2AssessmentTests {
         String replaced = urlParams.replaceAll("\\+"," ");
         assertThat(httptextlog).containsText(replaced);
     }
+
+    public static final String JSON_ZIPCODE = "{ \"_id\" : \"11101\", \"city\" : \"ASTORIA\", \"loc\" : [ -73.939393, 40.750316 ], \"pop\" : 23142, \"state\" : \"NY\" }";
+
+    @Test
+    public void test16CreateJSONMappingID() throws NoSuchFieldException, IllegalAccessException {
+        Gson gson = new Gson();
+        Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
+
+        assertThat(Zipcode.class.getField("_id").get(z), instanceOf(String.class));
+        assertThat((String) Zipcode.class.getField("_id").get(z), equalTo("11101"));
+    }
+
+    @Test
+    public void test17CreateJSONMapping() throws NoSuchFieldException, IllegalAccessException {
+        Gson gson = new Gson();
+        Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
+
+        assertThat(Zipcode.class.getField("city").get(z), instanceOf(String.class));
+        assertThat((String) Zipcode.class.getField("city").get(z), equalTo("ASTORIA"));
+
+        assertThat(Zipcode.class.getField("state").get(z), instanceOf(String.class));
+        assertThat((String) Zipcode.class.getField("state").get(z), equalTo("NY"));
+
+        assertThat(Zipcode.class.getField("pop").get(z), instanceOf(int.class));
+        assertThat((Integer) Zipcode.class.getField("pop").get(z), equalTo(23142));
+    }
+
+    @Test
+    public void test18CreateJSONMappingLoc() throws NoSuchFieldException, IllegalAccessException {
+        Gson gson = new Gson();
+        Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
+
+        assertThat(Zipcode.class.getField("loc").get(z), instanceOf(double[].class));
+        assertThat(((double[]) Zipcode.class.getField("loc").get(z))[0], closeTo(-73.939393, 0.01));
+        assertThat(((double[]) Zipcode.class.getField("loc").get(z))[1], closeTo(40.750316, 0.01));
+    }
+
+    @Test
+    public void test19JSONActivityCheckAddJSONButton() {
+        Gson gson = new Gson();
+        TextView _id = (TextView) jsonActivity.findViewById(R.id.field_idvalue);
+        TextView pop = (TextView) jsonActivity.findViewById(R.id.fieldpopvalue);
+        TextView city = (TextView) jsonActivity.findViewById(R.id.fieldcityvalue);
+        TextView state = (TextView) jsonActivity.findViewById(R.id.fieldstatevalue);
+        TextView _lat = (TextView) jsonActivity.findViewById(R.id.fieldloclatvalue);
+        TextView _long = (TextView) jsonActivity.findViewById(R.id.fieldloclongvalue);
+        Button addjson = (Button) jsonActivity.findViewById(R.id.addjson);
+
+        _id.setText("11102");
+        pop.setText(Integer.toString(1000));
+        city.setText("Miami");
+        state.setText("Florida");
+        _lat.setText("+25.46");
+        _long.setText("-80.11");
+
+        addjson.callOnClick();
+
+        //hack
+        String result = gson.toJson(jsonActivity.zipcodes.get(0), Zipcode.class);
+        assertThat(result, containsString("\"_id\":\"11102\""));
+        assertThat(result, containsString("\"pop\":1000"));
+        assertThat(result, containsString("\"city\":\"Miami\""));
+        assertThat(result, containsString("\"state\":\"Florida\""));
+        assertThat(result, containsString("\"loc\":[25.46,-80.11]"));
+    }
+
+    @Test
+    public void test25JSONActivityCheckSaveJSONButton() {
+        Gson gson = new Gson();
+        TextView _id = (TextView) jsonActivity.findViewById(R.id.field_idvalue);
+        TextView pop = (TextView) jsonActivity.findViewById(R.id.fieldpopvalue);
+        TextView city = (TextView) jsonActivity.findViewById(R.id.fieldcityvalue);
+        TextView state = (TextView) jsonActivity.findViewById(R.id.fieldstatevalue);
+        TextView _lat = (TextView) jsonActivity.findViewById(R.id.fieldloclatvalue);
+        TextView _long = (TextView) jsonActivity.findViewById(R.id.fieldloclongvalue);
+        Button addjson = (Button) jsonActivity.findViewById(R.id.addjson);
+        Button savejson = (Button) jsonActivity.findViewById(R.id.savejson);
+
+        _id.setText("11102");
+        pop.setText(Integer.toString(1000));
+        city.setText("Miami");
+        state.setText("Florida");
+        _lat.setText("+25.46");
+        _long.setText("-80.11");
+
+        addjson.callOnClick();
+        savejson.callOnClick();
+    }
+
 
     @Test
     public void testBonus01ListViewActivityCheckSecondLevelLayoutViewRowPadding() {
@@ -279,5 +384,15 @@ public class Unit2AssessmentTests {
         assertThat(httptextlog).containsText("\"delivery\": \"18:15\"");
         assertThat(httptextlog).containsText("\"size\": \"small\"");
         assertThat(httptextlog).containsText("\"topping\": \"cheese\"");
+    }
+
+    public void testBonus06CreateJSONMappingLatlong() throws NoSuchFieldException, IllegalAccessException {
+        Gson gson = new GsonBuilder().registerTypeAdapter(Zipcode.class, new ZipcodeDeserializer()).create();
+        Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
+
+        assertThat(Zipcode.class.getField("_lat").get(z), instanceOf(double.class));
+        assertThat(Zipcode.class.getField("_long").get(z), instanceOf(double.class));
+        assertThat(((double) Zipcode.class.getField("_lat").get(z)), closeTo(-73.939393, 0.01));
+        assertThat(((double) Zipcode.class.getField("_long").get(z)), closeTo(40.750316, 0.01));
     }
 }

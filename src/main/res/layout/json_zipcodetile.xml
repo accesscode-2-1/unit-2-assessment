@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/field_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/field_idlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:text="_id:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/field_idvalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:text="00010"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fieldpop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fieldpoplabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pop:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/fieldpopvalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:text="10"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fieldcity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fieldcitylabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="city:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/fieldcityvalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEW YORK"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fieldstate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fieldstatelabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="state:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/fieldstatevalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NY"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/fieldloclabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="loc"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:typeface="monospace" />
+
+    <LinearLayout
+        android:id="@+id/fieldloclat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fieldloclatlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lat:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/fieldloclatvalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:text="+40.00"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fieldloclong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fieldloclonglabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="long:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+
+        <EditText
+            android:id="@+id/fieldloclongvalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:text="-35.00"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:typeface="monospace" />
+    </LinearLayout>
+</LinearLayout>

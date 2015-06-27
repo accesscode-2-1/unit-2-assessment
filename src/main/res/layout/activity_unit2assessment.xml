@@ -20,4 +20,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/listViewActivity"/>
 
+    <Button
+        android:id="@+id/jsonActivity"
+        android:text="JSONActivity"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/networkActivity"/>
+
 </RelativeLayout>
