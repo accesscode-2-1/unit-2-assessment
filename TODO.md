@@ -1,3 +1,4 @@
+#FEATURES
 
 1. [x] ListView (@shurane)
     - [x] create it in 2 stages
@@ -54,6 +55,13 @@
     - [x] with buttons
 
 ----
+
+#BUGS
+- [ ] NotificationActivity should not keep launch a new instance each time the notification is clicked
+
+----
+
+#EXTRA
 
 - [ ] use travis-ci to generate and collect test reports
 - [ ] use styling for bigger textviews instead of `android:textAppearance="?android:attr/textAppearanceLarge"`
