@@ -42,7 +42,11 @@
                 https://httpbin.org/post
             ```
 
-    4. [ ] API use (flickr API again?) (@amyquispe)
+    4. [ ] API use (flickr API again?) (@shen)
+        - FlickrService
+        - FlickrResponse
+        - GithubService
+        - GithubResponse
         - http://www.mdswanson.com/blog/2013/12/16/reliable-android-http-testing-with-retrofit-and-mockito.html
         - when API is up
         - when API is delayed over NetworkTimeout (but not down)
