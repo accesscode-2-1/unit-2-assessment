@@ -51,6 +51,8 @@ public class JSONActivity extends Activity {
         savejson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                File directory = getExternalCacheDir();
+                File file = new File(directory, "zipcodes.json");
             }
         });
 
@@ -58,6 +60,8 @@ public class JSONActivity extends Activity {
         loadjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                File directory = getExternalCacheDir();
+                File file = new File(directory, "zipcodes.json");
             }
         });
     }

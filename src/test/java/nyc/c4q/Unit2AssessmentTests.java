@@ -257,18 +257,12 @@ public class Unit2AssessmentTests {
     public static final String JSON_ZIPCODE = "{\"_id\":\"11101\",\"city\":\"ASTORIA\",\"loc\":[-73.939393,40.750316],\"pop\":23142,\"state\":\"NY\"}";
 
     @Test
-    public void test16CreateJSONMappingID() throws NoSuchFieldException, IllegalAccessException {
+    public void test16JSONActivityCreateJSONMappingID() throws NoSuchFieldException, IllegalAccessException {
         Gson gson = new Gson();
         Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
 
         assertThat(Zipcode.class.getField("_id").get(z), instanceOf(String.class));
         assertThat((String) Zipcode.class.getField("_id").get(z), equalTo("11101"));
-    }
-
-    @Test
-    public void test17CreateJSONMapping() throws NoSuchFieldException, IllegalAccessException {
-        Gson gson = new Gson();
-        Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
 
         assertThat(Zipcode.class.getField("city").get(z), instanceOf(String.class));
         assertThat((String) Zipcode.class.getField("city").get(z), equalTo("ASTORIA"));
@@ -281,7 +275,7 @@ public class Unit2AssessmentTests {
     }
 
     @Test
-    public void test18CreateJSONMappingLoc() throws NoSuchFieldException, IllegalAccessException {
+    public void test17JSONActivityCreateJSONMappingLoc() throws NoSuchFieldException, IllegalAccessException {
         Gson gson = new Gson();
         Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
 
@@ -291,7 +285,7 @@ public class Unit2AssessmentTests {
     }
 
     @Test
-    public void test19JSONActivityCheckAddJSONButton() {
+    public void test18JSONActivityCheckAddJSONButton() {
         Gson gson = new Gson();
         TextView _id = (TextView) jsonActivity.findViewById(R.id.field_idvalue);
         TextView pop = (TextView) jsonActivity.findViewById(R.id.fieldpopvalue);
@@ -310,7 +304,7 @@ public class Unit2AssessmentTests {
 
         addjson.callOnClick();
 
-        //hack
+        //TODO un-hack
         String result = gson.toJson(jsonActivity.zipcodes.get(0), Zipcode.class);
         assertThat(result, containsString("\"_id\":\"11101\""));
         assertThat(result, containsString("\"pop\":23142"));
@@ -320,7 +314,7 @@ public class Unit2AssessmentTests {
     }
 
     @Test
-    public void test20JSONActivityCheckSaveJSONButton() throws FileNotFoundException {
+    public void test19JSONActivityCheckSaveJSONButton() throws FileNotFoundException {
         ShadowEnvironment.setExternalStorageState(Environment.MEDIA_MOUNTED);
 
         TextView _id = (TextView) jsonActivity.findViewById(R.id.field_idvalue);
@@ -345,7 +339,7 @@ public class Unit2AssessmentTests {
         File file = new File(directory, "zipcodes.json");
         String results = new Scanner(file).useDelimiter("\\Z").next();
 
-        //hack
+        // TODO un-hack
         assertThat(results, containsString("\"_id\":\"11101\""));
         assertThat(results, containsString("\"pop\":23142"));
         assertThat(results, containsString("\"city\":\"ASTORIA\""));
@@ -354,7 +348,7 @@ public class Unit2AssessmentTests {
     }
 
     @Test
-    public void test21JSONActivityCheckLoadJSONButton() throws IOException {
+    public void test20JSONActivityCheckLoadJSONButton() throws IOException {
         ShadowEnvironment.setExternalStorageState(Environment.MEDIA_MOUNTED);
         Gson gson = new Gson();
         Button loadjson = (Button) jsonActivity.findViewById(R.id.loadjson);
