@@ -85,7 +85,7 @@ public class NetworkActivity extends Activity {
                 https://httpbin.org/post
         */
 
-        class c4qAsync extends AsyncTask<String, Void, String>{
+        class c4qAsyncGet extends AsyncTask<String, Void, String>{
 
             @Override
             protected String doInBackground(String... strings) {
@@ -119,7 +119,8 @@ public class NetworkActivity extends Activity {
         httpbinpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postRequest();
+
+                httptextlog.setText(postRequest());
             }
         });
 
@@ -136,7 +137,7 @@ public class NetworkActivity extends Activity {
             }
         });
     }
-    public void postRequest(){
+    public String postRequest(){
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost("https://httpbin.org/post");
@@ -166,9 +167,11 @@ public class NetworkActivity extends Activity {
             HttpResponse response = httpClient.execute(httpPost);
             // write response to log
             Log.d("Http Post Response:", response.toString());
+            return response.toString();
         } catch (Exception e) {
             // Log exception
             e.printStackTrace();
         }
+        return "";
     }
 }
