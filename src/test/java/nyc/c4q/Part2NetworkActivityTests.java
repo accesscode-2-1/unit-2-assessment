@@ -40,7 +40,7 @@ public class Part2NetworkActivityTests {
         assertThat(usedPermissions, hasItem(Manifest.permission.INTERNET));
     }
 
-    @Test // DONE, if 13 passes, this fails.
+    @Test
     public void test12NetworkActivityHTTPUrlConnectionGET() {
         Button httpbinget = (Button) Helpers.findViewByIdString(networkActivity, "httpbinget");
         TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
@@ -49,7 +49,7 @@ public class Part2NetworkActivityTests {
         Assertions.assertThat(httptextlog).containsText(urlParams);
     }
 
-    @Test // DONE, if 12 passes, this fails.
+    @Test
     public void test13NetworkActivityHTTPUrlConnectionGETOKHTTP() throws Exception {
         Button httpbingetokhttp = (Button) Helpers.findViewByIdString(networkActivity, "httpbingetokhttp");
         TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
