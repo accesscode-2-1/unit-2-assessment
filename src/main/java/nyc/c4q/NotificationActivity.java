@@ -39,7 +39,7 @@ public class NotificationActivity extends Activity {
         permNotification = new Notification.Builder(c)
                 .setContentTitle("permanent@c4q.nyc")
                 .setSmallIcon(R.drawable.c4qfavicon).setOngoing(true)
-                .setContentText("I'm staying planted right here").build();
+                .setContentText("I'm staying planted right here.").build();
 
         btnNotification = new Notification.Builder(c)
                 .setContentTitle("permanent@c4q.nyc")
@@ -59,20 +59,20 @@ public class NotificationActivity extends Activity {
         autocancelnotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notificationManager.notify(0, autoCancel);
+                notificationManager.notify(ID_AUTOCANCEL_NOTIFICATION, autoCancel);
             }
         });
 
         swipenotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notificationManager.notify(0, swipeNotification);
+                notificationManager.notify(ID_SWIPE_NOTIFICATION, swipeNotification);
             }
         });
         permanentnotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notificationManager.notify(0, permNotification);
+                notificationManager.notify(ID_PERMANENT_NOTIFICATION, permNotification);
             }
         });
         dismisspermanentnotification.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +84,7 @@ public class NotificationActivity extends Activity {
         buttonnotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notificationManager.notify(0, btnNotification);
+                notificationManager.notifyAll();
             }
         });
 

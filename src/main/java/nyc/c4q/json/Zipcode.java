@@ -1,9 +1,16 @@
 package nyc.c4q.json;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Zipcode {
-    private int id, pop;
-    String city;
-    String state;
+    public int _id, pop;
+    public String city;
+    public String state;
+
+    private String JSON_id, JSON_pop,
+    JSON_city, JSON_loc;
+
 
     public void setPop(int pop) {
         this.pop = pop;
@@ -23,14 +30,16 @@ public class Zipcode {
 
     String loc;
     public Zipcode(int id){
-        this.id = id;
+        this._id = id;
     }
 
+    public JSONObject toJSON() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(JSON_id, _id);
+        json.put(JSON_city, city);
+        json.put(JSON_loc, loc);
+        json.put(JSON_pop, pop);
+        return json;
+    }
 
-
-//    assertThat(result, containsString("\"_id\":\"11101\""));
-//    assertThat(result, containsString("\"pop\":23142"));
-//    assertThat(result, containsString("\"city\":\"ASTORIA\""));
-//    assertThat(result, containsString("\"state\":\"NY\""));
-//    assertThat(result, containsString("\"loc\":[-73.939393,40.750316]"));
 }

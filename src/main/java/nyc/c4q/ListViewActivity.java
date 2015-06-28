@@ -1,7 +1,9 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -47,22 +49,38 @@ public class ListViewActivity extends Activity {
 
         @Override
         public Object getItem(int position) {
+
             return COLORS[position];
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
-
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
             if (convertView == null){
-                convertView = getLayoutInflater().inflate(R.layout.listview_tile, parent, false);
+                LayoutInflater inflater = getLayoutInflater();
+                convertView = getLayoutInflater().inflate(R.layout.listview_tile, null);
+
+               //convertView.setBackgroundResource(Color.parseColor(COLORS[position]));  //fixme
             }
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    textLog.setText("You clicked on Item " + COLORS[position]);
+                }
+            });
+
 
             return convertView;
         }
+
     }
+
+
+
 }

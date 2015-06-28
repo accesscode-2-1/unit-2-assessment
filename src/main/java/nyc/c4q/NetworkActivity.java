@@ -16,6 +16,10 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,6 +44,7 @@ public class NetworkActivity extends Activity {
     public Button httpbinpost;
     public Button httpbinpostokhttp;
     public Button cleartextlog;
+    private String mResponse;
     private String urlGetString;
     private String url = "https://httpbin.org/get?";
     final public String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
@@ -106,12 +111,14 @@ public class NetworkActivity extends Activity {
         httpbinpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                httptextlog.setText(mResponse);
             }
         });
 
         httpbinpostokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
@@ -131,11 +138,22 @@ public class NetworkActivity extends Activity {
         protected String doInBackground(Void... params){
             {
                 HttpURLConnection connection = null;
+
                 InputStream inputStream = null;
                 try {
-                    URL url = new URL(urlGetString + urlParams);
+                    String replaced = String.format("https://httpbin.org/get?%s", urlParams);
+                    URL url = new URL(replaced);
                     Log.d("test url", url.toString());
                     connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.connect();
+
+
+                    HttpClient client = new DefaultHttpClient();
+
+                    HttpPost post = new HttpPost("https://httpbin.org/post" + replaced);
+                    HttpResponse response = client.execute(post);
+
                     inputStream = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                     StringBuilder builder = new StringBuilder();
@@ -143,7 +161,7 @@ public class NetworkActivity extends Activity {
                     while ((line = reader.readLine()) != null) {
                         builder.append(line + "\n");
                     }
-                    return builder.toString();
+                    return response.toString();
 
                 } catch (Exception e) {
 
@@ -153,14 +171,14 @@ public class NetworkActivity extends Activity {
                     }
 
                 }
-
             }
-            return "testing";
+            return " ";
         }
 
         @Override
         protected void onPostExecute(String s) {
-            httptextlog.setText(s);
+            mResponse = s;
+            httptextlog.setText(mResponse);
 
         }
 
