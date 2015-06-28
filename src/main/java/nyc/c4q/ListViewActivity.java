@@ -35,6 +35,5 @@ public class ListViewActivity extends Activity {
 
         ArrayAdapter colorAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, COLORS);
         list.setAdapter(colorAdapter);
-
     }
 }
