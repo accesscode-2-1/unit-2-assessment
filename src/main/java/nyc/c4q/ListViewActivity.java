@@ -2,7 +2,11 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.lang.reflect.Array;
 
 import static nyc.c4q.R.color.background;
 
@@ -23,8 +27,8 @@ public class ListViewActivity extends Activity {
 
     };
 
-
     public TextView textLog;
+    public  ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +38,11 @@ public class ListViewActivity extends Activity {
         textLog = (TextView) findViewById(R.id.textLog);
 
 
-        for (int i = 0; i < ListViewActivity.COLORS.length; i++)
-        {
-
-
-        }
+        //I was trying to create a list adapter
+       // listView = (ListView) findViewById(R.id.list);
+        //ListView listView = new ListView(this);
+//        listView= (ListView) findViewById(R.id.list);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.activity_listview,COLORS);
+//        listView.setAdapter(adapter);
     }
 }

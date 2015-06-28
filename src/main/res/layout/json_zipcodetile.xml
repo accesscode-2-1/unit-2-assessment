@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:text="00010"
+            android:text="11101"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:typeface="monospace" />
     </LinearLayout>
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:text="10"
+            android:text="23142"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:typeface="monospace" />
     </LinearLayout>
@@ -70,7 +70,7 @@
             android:id="@+id/fieldcityvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NEW YORK"
+            android:text="ASTORIA"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:typeface="monospace" />
     </LinearLayout>

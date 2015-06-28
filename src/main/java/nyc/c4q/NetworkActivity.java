@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
@@ -22,6 +24,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -43,29 +46,38 @@ public class NetworkActivity extends Activity {
 
     // Code ===========================
 
-    private static String url = "https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
+    public static String url = "https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
 
     //JSON Node Names
-    private static final String comments = "comments";
-    private static final String custemail = "custemail";
-    private static final String custel = "custel";
-    private static final String delivery = "delivery";
-    private static final String size = "size";
-    private static final String topping = "topping";
+    public static final String comments = "comments";
+    public static final String custemail = "custemail";
+    public static final String custel = "custel";
+    public static final String delivery = "delivery";
+    public static final String size = "size";
+    public static final String topping = "topping";
 
+    public String getUrlParams() {
+        return urlParams;
+    }
 
-    JSONArray args = null;
+    public static String getUrl() {
+        return url;
+    }
+
+    public static void setUrl(String url) {
+        NetworkActivity.url = url;
+    }
 
     public static String getComments() {
         return comments;
     }
 
-    public static String getCustel() {
-        return custel;
-    }
-
     public static String getCustemail() {
         return custemail;
+    }
+
+    public static String getCustel() {
+        return custel;
     }
 
     public static String getDelivery() {
@@ -80,13 +92,15 @@ public class NetworkActivity extends Activity {
         return topping;
     }
 
-    public static String getUrl() {
-        return url;
+    public JSONArray getJSONArray() {
+        return mJSONArray;
     }
 
-    public static void setUrl(String url) {
-        NetworkActivity.url = url;
+    public void setJSONArray(JSONArray JSONArray) {
+        mJSONArray = JSONArray;
     }
+
+    JSONArray mJSONArray = null;
 
 
     @Override
@@ -100,6 +114,9 @@ public class NetworkActivity extends Activity {
         cleartextlog = (Button) findViewById(R.id.cleartextlog);
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
+        final String TAG = NetworkActivity.class.getSimpleName();
+
+
 
         /*
         The goal is to use AsyncTasks here.
@@ -128,66 +145,78 @@ public class NetworkActivity extends Activity {
         */
 
 
-        httpbinget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        if (
 
-        httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+                isNetworkAvailable()
 
-        httpbinpost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+                )
 
-        httpbinpostokhttp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            Call call = client.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                }
 
-        cleartextlog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                httptextlog.setText("httptextlog");
-            }
-        });
-    }
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    try {
+                        String jsonData = response.body().string();
+                        Log.d(TAG, jsonData);
+                        if (response.isSuccessful()) {
+                            getJSONArray();
 
+                            Log.v(TAG, jsonData);
+                        }
+                    } catch (IOException e) {
+                        Log.d(TAG, "Exception caught", e);
+                    }
 
-    class GetJSONTask extends AsyncTask<String, Void, JSONObject> {
+                }
 
-
+            });
 
 
-        protected JSONObject doInBackground(String... urls) {
-            // Creating new JSON Parser
+            httpbinget.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
 
+            httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
 
-            // Getting JSON from URL
-            JSONObject json1 = null;
-            try {
-                json1 = new JSONObject((url));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            httpbinpost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
 
-            return json1;
+            httpbinpostokhttp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
 
+            cleartextlog.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    httptextlog.setText("No HTTP response");
+                }
+            });
         }
 
-        @Override
-        protected void onPostExecute(JSONObject jsonObject) {
-            super.onPostExecute(jsonObject);
 
-
-        }
     }
 
+    private boolean isNetworkAvailable() {
+        return false;
+    }
 }
