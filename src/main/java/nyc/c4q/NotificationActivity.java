@@ -26,4 +26,6 @@ public class NotificationActivity extends Activity {
         Button buttonnotification = (Button) findViewById(R.id.buttonnotification);
 
     }
+
+
 }
