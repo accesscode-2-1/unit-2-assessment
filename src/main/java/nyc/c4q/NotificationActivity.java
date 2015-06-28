@@ -82,6 +82,12 @@ public class NotificationActivity extends Activity {
 
             }
         });
+        buttonnotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
 

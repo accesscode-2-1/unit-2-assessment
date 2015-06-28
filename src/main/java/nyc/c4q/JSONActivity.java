@@ -53,9 +53,6 @@ public class JSONActivity extends Activity {
                         String state = obj.getString("state");
                         int pop = obj.getInt("pop");
 
-
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -1,21 +1,14 @@
 package nyc.c4q;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
@@ -68,84 +61,20 @@ public class NetworkActivity extends Activity {
                 https://httpbin.org/post
         */
 
+        class TestMain {
+            OkHttpClient client = new OkHttpClient();
 
+            // code request code here
+            String doGetRequest(String url) throws IOException {
+                Request request = new Request.Builder()
+                        .url(urlParams)
+                        .build();
 
-        class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
-
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-            }
-
-            @Override
-            protected Boolean doInBackground(String... urls) {
-                try {
-
-                    //------------------>>
-                    HttpGet httppost = new HttpGet(urlParams);
-                    HttpClient httpclient = new DefaultHttpClient();
-                    HttpResponse response = httpclient.execute(httppost);
-
-                    // StatusLine stat = response.getStatusLine();
-                    int status = response.getStatusLine().getStatusCode();
-
-                    if (status == 200) {
-                        HttpEntity entity = response.getEntity();
-                        String data = EntityUtils.toString(entity);
-
-
-                        JSONObject jsono = new JSONObject(data);
-
-                        return true;
-                    }
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-
-                    e.printStackTrace();
-                }
-                return false;
-            }
-
-            protected void onPostExecute(Boolean result) {
-
+                Response response = client.newCall(request).execute();
+                return response.body().string();
             }
         }
 
-        httpbinget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
-
-        httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
-        httpbinpost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
-        httpbinpostokhttp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
-        cleartextlog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                httptextlog.setText("cleared HTTP response");
-            }
-        });
     }
 }
