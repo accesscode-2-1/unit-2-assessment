@@ -1,28 +1,29 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
-import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
 
 public class NetworkActivity extends Activity {
 
@@ -76,12 +77,48 @@ public class NetworkActivity extends Activity {
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String stringUrl = urlParams;
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    new DownloadTask().execute(stringUrl);
+                } else {
+                    httptextlog.setText("No Network Available");
+                }
+
             }
         });
 
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .url(urlParams)
+                        .build();
+
+                Call call = client.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+                        //jSON parsing
+
+                        //update Display
+                        httptextlog.setText(urlParams);
+
+
+                    }
+                });
+
+
             }
         });
 
@@ -104,4 +141,51 @@ public class NetworkActivity extends Activity {
             }
         });
     }
+
+
+    public class DownloadTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+            return downloadUrl(urls[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            //want to setText equal to s- show result
+            httptextlog.setText(urlParams);
+        }
+    }
+
+    public String downloadUrl(String jsonURl){
+            String result = "";
+            try {
+                URL url = new URL(jsonURl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(0);
+                connection.setReadTimeout(0);
+
+
+                InputStream input = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
+                StringBuilder builder = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line + "\n");
+                }
+                result = builder.toString();
+                connection.disconnect();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+    }
+
+
 }
+
