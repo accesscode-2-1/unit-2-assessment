@@ -44,9 +44,15 @@ public class JSONActivity extends Activity {
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // Read the entire file using getEntireJSON method
+               // getJSON();
+               //Parse the file to obtain id, pop, city, etc... using parseJSON method
+//toDO
+               // parseJSON();
+
             }
         });
-
+//Save to file
         savejson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +61,7 @@ public class JSONActivity extends Activity {
             }
         });
 
-
+//open file from gallery/documents
         loadjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +71,25 @@ public class JSONActivity extends Activity {
         });
     }
 
-    private String jsonParser(String urlParams) {
+//    private void parseJSON() {
+//
+//        int humidity = -1;
+//        // = getJsonString();
+//
+//        try {
+//            //JSONObject object = new JSONObject(jsonString);
+//            JSONObject main = object.getJSONObject("main");
+//            humidity = main.getInt("humidity");
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //return humidity;
+//
+//    }
+
+    private String getEntireJSON(String urlParams) {
         String result= "";
         URL url = null;
         try {

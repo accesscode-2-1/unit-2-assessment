@@ -111,7 +111,7 @@ public class NetworkActivity extends Activity {
     }
 
 
-    private class DownloadTask extends AsyncTask<String, Void, String> {
+    public class DownloadTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -129,7 +129,7 @@ public class NetworkActivity extends Activity {
         }
     }
 
-    private String downloadUrl(String myurl) throws IOException {
+    public String downloadUrl(String myurl) throws IOException {
         InputStream is = null;
         // Only display the first 500 characters of the retrieved
         // web page content.
