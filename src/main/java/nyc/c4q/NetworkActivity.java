@@ -18,6 +18,7 @@ import com.squareup.okhttp.Response;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -73,6 +74,9 @@ public class NetworkActivity extends Activity {
                 https://httpbin.org/post
         */
 
+        String.format("https://httpbin.org/get?%s", urlParams);
+        httptextlog.setText(urlParams);
+
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,12 +86,15 @@ public class NetworkActivity extends Activity {
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String replaced = urlParams.replaceAll("\\+"," ");
+                httptextlog.setText(replaced);
             }
         });
 
         httpbinpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
@@ -103,5 +110,8 @@ public class NetworkActivity extends Activity {
                 httptextlog.setText("cleared HTTP response");
             }
         });
+
+
+
     }
 }

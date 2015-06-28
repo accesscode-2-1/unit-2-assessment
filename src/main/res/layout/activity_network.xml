@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/cleartextlog"
         android:layout_alignParentBottom="true"
-        android:text="No HTTP response"
+        android:text="urlParams"
         android:typeface="monospace" />
 
 </RelativeLayout>
