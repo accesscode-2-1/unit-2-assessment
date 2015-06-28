@@ -73,5 +73,34 @@ public class NotificationActivity extends Activity {
             }
         });
 
+        permanentnotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                NotificationManager notificationManager = (NotificationManager) getSystemService(
+                        Context.NOTIFICATION_SERVICE);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+
+                builder.setContentTitle("permanent@c4q.nyc")
+                        .setContentText("I'm staying planted right here.")
+                        .setSmallIcon(R.drawable.c4qfavicon);
+
+                Notification notification = builder.build();
+                notification.flags = Notification.FLAG_ONGOING_EVENT;
+
+                notificationManager.notify(1337, notification);
+
+            }
+        });
+
+        dismisspermanentnotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NotificationManager notificationManager = (NotificationManager) getSystemService(
+                        Context.NOTIFICATION_SERVICE);
+                notificationManager.cancel(1337);
+            }
+        });
+
     }
 }
