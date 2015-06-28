@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,8 +52,27 @@ public class JSONActivity extends Activity {
         savejson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File directory = getExternalCacheDir();
+                File  directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
+
+
+
+                try {
+                    FileWriter fw = new FileWriter(file);
+
+                    fw.write(_id.getText().toString());
+                    fw.write(pop.getText().toString());
+                    fw.write(city.getText().toString());
+                    fw.write(state.getText().toString());
+                    fw.write(_lat.getText().toString());
+                    fw.write(_long.getText().toString());
+                    fw.flush();
+                    fw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+
             }
         });
 
@@ -62,6 +82,8 @@ public class JSONActivity extends Activity {
             public void onClick(View v) {
                 File directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
+
+
             }
         });
     }

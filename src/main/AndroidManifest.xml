@@ -4,6 +4,9 @@
     android:versionCode="2"
     android:versionName="1.0.0-SNAPSHOT">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application android:name=".Unit2AssessmentApplication">
         <activity
             android:name=".Unit2AssessmentActivity"

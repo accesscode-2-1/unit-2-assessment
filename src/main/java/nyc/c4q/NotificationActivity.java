@@ -1,8 +1,13 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 public class NotificationActivity extends Activity {
@@ -23,7 +28,22 @@ public class NotificationActivity extends Activity {
         Button swipenotification = (Button) findViewById(R.id.swipenotification);
         Button permanentnotification = (Button) findViewById(R.id.permanentnotification);
         Button dismisspermanentnotification = (Button) findViewById(R.id.dismisspermanentnotification);
-        Button buttonnotification = (Button) findViewById(R.id.buttonnotification);
+        final Button buttonnotification = (Button) findViewById(R.id.buttonnotification);
+
+        buttonnotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String subject = "subject";
+                String body = "body";
+                
+                NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                Notification notify=new Notification(R.drawable.c4qfavicon,buttonnotification.getText().toString(),System.currentTimeMillis());
+                PendingIntent pending= PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0);
+
+                notify.setLatestEventInfo(getApplicationContext(),subject,body,pending);
+                notif.notify(0, notify);
+            }
+        });
 
     }
 }

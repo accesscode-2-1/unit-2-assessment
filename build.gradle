@@ -45,6 +45,10 @@ dependencies {
     // https://github.com/robolectric/robolectric/issues/1369
     compile 'com.android.support:support-v4:22.1.1'
 
+    // OkHTTP
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+
     // why is this 'compile' over 'testCompile'? Man... so weird.
     // relevant: https://github.com/square/assertj-android/issues/129
     compile 'com.squareup.assertj:assertj-android:1.0.0'
