@@ -2,11 +2,13 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class ListViewActivity extends Activity {
+
 
     public static final String[] COLORS = {
             "#142b44",
@@ -29,5 +31,13 @@ public class ListViewActivity extends Activity {
         textLog = (TextView) findViewById(R.id.textLog);
         ListView listview = (ListView)findViewById(R.id.list);
         EditText phoneinput = (EditText)findViewById(R.id.adapterCount);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, COLORS);
+        listview.setAdapter(adapter);
+
     }
+
+
 }
+
+
+

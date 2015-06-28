@@ -154,7 +154,7 @@ public class NetworkActivity extends Activity {
         protected void onPostExecute(String result) {
             Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
 
-            httptextlog.setText(result);
+            httptextlog.setText(urlParams);
         }
     }
 
