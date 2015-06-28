@@ -54,7 +54,7 @@ public class ColorAdapter extends BaseAdapter {
         itemView.setBackgroundColor(Color.parseColor(color));
         itemView.setText(color);
         ViewGroup.LayoutParams params= itemView.getLayoutParams();
-        if(itemHeight > 4){
+        if(itemHeight > 9){
             params.height=itemHeight * 5;
         }else{
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
