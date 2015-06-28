@@ -52,6 +52,7 @@ public class Part3JSONActivityTests {
         assertThat(Zipcode.class.getField("_id").get(z), instanceOf(String.class));
         assertThat((String) Zipcode.class.getField("_id").get(z), equalTo("11101"));
 
+
         assertThat(Zipcode.class.getField("city").get(z), instanceOf(String.class));
         assertThat((String) Zipcode.class.getField("city").get(z), equalTo("ASTORIA"));
 

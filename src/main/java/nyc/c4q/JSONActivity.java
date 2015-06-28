@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,14 @@ public class JSONActivity extends Activity {
 
         zipcodes = new ArrayList<Zipcode>();
 
+        //Double [] location = {-73.939393,40.750316};
+
+        String JSON_ZIPCODE = "{\"_id\":\"11101\",\"city\":\"ASTORIA\",\"loc\":[-73.939393,40.750316],\"pop\":23142,\"state\":\"NY\"}";
+        Gson gson = new Gson();
+        Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
+
+        zipcodes.add(z);
+
         Button savejson = (Button) findViewById(R.id.savejson);
         Button loadjson = (Button) findViewById(R.id.loadjson);
         Button addjson = (Button) findViewById(R.id.addjson);
@@ -48,11 +57,14 @@ public class JSONActivity extends Activity {
             }
         });
 
+
+
         savejson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 File directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
+
             }
         });
 
