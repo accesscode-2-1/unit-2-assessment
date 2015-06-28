@@ -2,7 +2,9 @@
 This is designed to run with Android Studio with
 [Unit Testing support](https://sites.google.com/a/android.com/tools/tech-docs/unit-testing-support) enabled in Android Studio's Gradle settings.
 
-Watch what this app does here: https://vid.me/9eP8
+Watch what this app does here: 
+
+> [![unit-2-asssessment](static/unit-2-asssessment.png)](https://vid.me/9eP8)
 
 ### Importing
 Import the project into Android Studio by selecting `Import Project` and selecting the project's `build.gradle`. When prompted, you can pick the default gradle wrapper.
