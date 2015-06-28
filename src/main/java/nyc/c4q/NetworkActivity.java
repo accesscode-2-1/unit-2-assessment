@@ -16,9 +16,15 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -34,6 +40,8 @@ public class NetworkActivity extends Activity {
     public Button httpbinpost;
     public Button httpbinpostokhttp;
     public Button cleartextlog;
+    private String urlGetString;
+    private String url = "https://httpbin.org/get?";
     final public String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
 
     // Code ===========================
@@ -49,6 +57,15 @@ public class NetworkActivity extends Activity {
         cleartextlog = (Button) findViewById(R.id.cleartextlog);
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
+
+        urlGetString = "https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don%27t+ask+any+questions.";
+        String urlPostString="https://httpbin.org/post";
+        String httpbingeString;
+        String httpbingetokhttpString;
+        String httpbinpostString;
+        String  httpbinpostokhttpString;
+
+
 
         /*
         The goal is to use AsyncTasks here.
@@ -76,6 +93,7 @@ public class NetworkActivity extends Activity {
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
@@ -103,5 +121,50 @@ public class NetworkActivity extends Activity {
                 httptextlog.setText("cleared HTTP response");
             }
         });
+
+
+
+    }
+    public class AsyncTestTask extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected String doInBackground(Void... params){
+            {
+                HttpURLConnection connection = null;
+                InputStream inputStream = null;
+                try {
+                    URL url = new URL(urlGetString + urlParams);
+                    Log.d("test url", url.toString());
+                    connection = (HttpURLConnection) url.openConnection();
+                    inputStream = connection.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                    StringBuilder builder = new StringBuilder();
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        builder.append(line + "\n");
+                    }
+                    return builder.toString();
+
+                } catch (Exception e) {
+
+                } finally {
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+
+                }
+
+            }
+            return "testing";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            httptextlog.setText(s);
+
+        }
+
+
+
     }
 }

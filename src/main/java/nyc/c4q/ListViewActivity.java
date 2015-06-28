@@ -2,7 +2,13 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
 
 public class ListViewActivity extends Activity {
 
@@ -25,5 +31,38 @@ public class ListViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview);
         textLog = (TextView) findViewById(R.id.textLog);
+        ListView listview = (ListView) findViewById(R.id.list);
+
+        CustomAdapter listadapter = new CustomAdapter();
+        listview.setAdapter(listadapter);
+    }
+
+    private class CustomAdapter extends BaseAdapter {
+
+
+        @Override
+        public int getCount() {
+            return COLORS.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return COLORS[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null){
+                convertView = getLayoutInflater().inflate(R.layout.listview_tile, parent, false);
+            }
+
+            return convertView;
+        }
     }
 }
