@@ -8,25 +8,29 @@
         android:id="@+id/autocancelnotification"
         android:text="Default Notification"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="ac"/>
 
     <Button
         android:id="@+id/swipenotification"
         android:text="Swipe Notification"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="sn"/>
 
     <Button
         android:id="@+id/permanentnotification"
         android:text="Permanent Notification"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="pn"/>
 
     <Button
         android:id="@+id/dismisspermanentnotification"
         android:text="Dismiss Permanent Notification"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="dp"/>
 
     <Button
         android:id="@+id/buttonnotification"
