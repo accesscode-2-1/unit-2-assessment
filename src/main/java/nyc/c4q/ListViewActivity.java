@@ -2,6 +2,8 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class ListViewActivity extends Activity {
@@ -25,5 +27,7 @@ public class ListViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview);
         textLog = (TextView) findViewById(R.id.textLog);
+        ListView listview = (ListView)findViewById(R.id.list);
+        EditText phoneinput = (EditText)findViewById(R.id.adapterCount);
     }
 }
