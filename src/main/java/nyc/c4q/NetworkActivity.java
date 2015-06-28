@@ -1,28 +1,11 @@
 package nyc.c4q;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
 
 public class NetworkActivity extends Activity {
 
@@ -104,4 +87,86 @@ public class NetworkActivity extends Activity {
             }
         });
     }
+    /*
+    private class getUrlParm extends AsyncTask<String, Void, String>{
+        String myUrlLink;
+
+        protected String doInBackground(String... urls){
+            try{
+
+            }catch(IOException e){
+
+            }
+        }
+    }
+    */
+
 }
+
+/**
+ * private class DownloadData extends AsyncTask<String, Void,String> {
+
+ String myXmlData;
+
+ protected String doInBackground(String... urls) { //the ... means it will accept 0 or many urls by deinition with this AsyncTask we can proess more than one thing
+ try {
+ myXmlData = downloadXML(urls[0]);
+
+ } catch (IOException e) {
+ return "Unable to download XML file";
+ }
+
+ return "";
+ }
+
+ protected void onPostExecute(String result){
+ Log.d("OnPostExecute", myXmlData);
+ xmlData = myXmlData;
+
+ }
+
+ private String downloadXML(String theUrl) throws IOException { //if there is an error in this method, thorow it back to the calling method and we want that method to deal with it
+ int BUFFER_SIZE = 2000;   //20000 chara at a time.
+ InputStream is = null;  //the mecanism we will use to do the download
+
+ String xmlContents = ""; //temp container for our data
+
+ try {
+ URL url = new URL(theUrl);  //start opening the url the website address
+ HttpURLConnection conn = (HttpURLConnection) url.openConnection();  //open a link or a a reference to that website
+ conn.setReadTimeout(10000);  //for whatever the reason we cannot download the file we want to close it gracefully. the maximum time to wait for an input stream read before giving up mill sec
+ conn.setConnectTimeout(15000); //connection timer same reason as before
+ conn.setRequestMethod("GET");  // get is a stanard way to access data for a web browser
+ conn.setDoInput(true);          //input data
+ int response = conn.getResponseCode();     //get a response and see what happens
+ Log.d("DownloadXML", "The response returned is: " + response); //if the response was okay then it would be 200
+ is = conn.getInputStream();
+
+ InputStreamReader isr = new InputStreamReader(is);  //read through whatever we send you
+ int charRead;
+ char[] inputBuffer = new char[BUFFER_SIZE];
+ try {
+ while ((charRead = isr.read(inputBuffer)) > 0)
+ {   //Reading through the inputBUffer charRead is the number of characters that have been read by this process
+ String readString = String.copyValueOf(inputBuffer, 0, charRead);//go through the array and we start at 0 and go through however many character have been read
+
+ xmlContents += readString; //continually add whatever we read to the xmlContents string
+ // and then now that we've read that we want to clear out the inputBuffer
+ inputBuffer = new char[BUFFER_SIZE];
+ }
+
+ return xmlContents;
+
+ } catch (IOException e) {
+ e.printStackTrace();  //shows where it crashed
+ return null;          // if there was a problem then it wont return anything
+ }
+
+ } finally {
+ if (is != null)  //no matter what, if there's an error we still want to execute the code that's in here
+ is.close();   //whether there is an error or not, make sure we close this InputStream
+ }
+ }
+ }
+ *
+ */
