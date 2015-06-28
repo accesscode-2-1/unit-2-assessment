@@ -42,7 +42,7 @@ public class Part4NotificationActivityTests {
         autocancelnotification.callOnClick();
         ShadowNotificationManager snm = Robolectric.shadowOf(notificationManager);
 
-        assertThat(snm.size(), equalTo(1));
+          assertThat(snm.size(), equalTo(1));
         ShadowNotification n = Robolectric.shadowOf(snm.getAllNotifications().get(0));
 
         assertThat(n.getContentTitle().toString(), containsString("default@c4q.nyc"));
