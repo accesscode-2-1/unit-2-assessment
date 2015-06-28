@@ -16,6 +16,8 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.assertj.android.api.Assertions;
+
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -76,12 +78,19 @@ public class NetworkActivity extends Activity {
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                httptextlog.setText(urlParams);
+
             }
         });
 
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String replaced = urlParams.replaceAll("\\+"," ");
+                httptextlog.setText(replaced);
+
             }
         });
 
