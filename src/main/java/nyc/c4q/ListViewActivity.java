@@ -60,11 +60,17 @@ public class ListViewActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+             /* I know I need to create a custom adapter in order to modify the row views,
+             * but I haven't been able to do it correctly.
+             */
+
             LayoutInflater inflater = getLayoutInflater();
             View row = convertView;
-
             row = inflater.inflate(R.layout.listview_tile, parent, false);
-            row.setBackgroundColor(Color.parseColor(COLORS[position])); // get background color from array
+
+            for (int i = 0; i < COLORS.length; i++) {
+                row.setBackgroundColor(Color.parseColor(COLORS[i]));
+            }
             return row;
         }
     }

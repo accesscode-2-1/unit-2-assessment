@@ -31,6 +31,8 @@ public class NotificationActivity extends Activity {
         Button dismisspermanentnotification = (Button) findViewById(R.id.dismisspermanentnotification);
         Button buttonnotification = (Button) findViewById(R.id.buttonnotification);
 
+
+        // TODO: Re-factor this into a switch if time allows.
         autocancelnotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,11 +60,19 @@ public class NotificationActivity extends Activity {
                 if (permanentNotiOn) {
                     notificationManager.cancel(ID_PERMANENT_NOTIFICATION);
                 } else {
-                    Toast.makeText(NotificationActivity.this, "Enable permanent notification first!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NotificationActivity.this, "No permanent notification found", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        // set listener and handle button cases in switch
+
+        buttonnotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createAutoCancelNotification();
+                createSwipeNotification();
+                createPermanentNotification();
+            }
+        });
     }
 
     public void createAutoCancelNotification() {
