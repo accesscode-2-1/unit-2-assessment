@@ -21,13 +21,17 @@
             android:layout_weight="1"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
     <Button
         android:id="@+id/addjson"
         android:text="Add JSON"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal" />
+    <TextView
+        android:id="@+id/json_viewer"
+        android:text="No JSON loaded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <include
         android:id="@+id/json_zipcodetile"
         layout="@layout/json_zipcodetile" />

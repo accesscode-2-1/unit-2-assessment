@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -82,6 +86,12 @@ public class NetworkActivity extends Activity {
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(asyncHttps == null){
+                    asyncHttps = new AsyncOkHttps().execute();
+                }else if(!asyncHttps.isCancelled()){
+                    asyncHttps.cancel(true);
+                    asyncHttps = new AsyncOkHttps().execute();
+                }
             }
         });
 
@@ -103,6 +113,36 @@ public class NetworkActivity extends Activity {
                 httptextlog.setText("cleared HTTP response");
             }
         });
+    }
+
+    public class AsyncOkHttps extends AsyncTask<Void,Void,String>{
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://httpbin.org/get?"+urlParams)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if(s != null){
+                httptextlog.setText(s);
+            }
+        }
     }
 
     public class AsyncHttps extends AsyncTask<Void,Void,String>{

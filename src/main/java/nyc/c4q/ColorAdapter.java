@@ -53,9 +53,13 @@ public class ColorAdapter extends BaseAdapter {
         TextView itemView = (TextView) row.findViewById(R.id.item_view);
         itemView.setBackgroundColor(Color.parseColor(color));
         itemView.setText(color);
+        ViewGroup.LayoutParams params= itemView.getLayoutParams();
         if(itemHeight > 4){
-            itemView.setLayoutParams(new LinearLayout.LayoutParams(itemView.getWidth(), itemHeight));
+            params.height=itemHeight * 5;
+        }else{
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         }
+        itemView.setLayoutParams(params);
 
         return row;
     }

@@ -6,7 +6,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -100,6 +102,14 @@ public class ListViewActivity extends Activity {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView tView = (TextView) view.findViewById(R.id.item_view);
+                textLog.setText("You clicked on Item(position=" + i + ", color=" + tView.getText().toString() + ")");
             }
         });
     }
