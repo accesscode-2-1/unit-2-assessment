@@ -26,7 +26,6 @@ import nyc.c4q.json.Zipcode;
 public class JSONActivity extends Activity {
 
     public List<Zipcode> zipcodes;
-    private SharedPreferences savednotes;
 
 
     @Override
@@ -34,15 +33,11 @@ public class JSONActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_json);
 
-        savednotes = getSharedPreferences("notes",MODE_PRIVATE);
-
-
-
         zipcodes = new ArrayList<Zipcode>();
 
         Button savejson = (Button) findViewById(R.id.savejson);
         Button loadjson = (Button) findViewById(R.id.loadjson);
-        Button addjson = (Button) findViewById(R.id.addjson);
+        final Button addjson = (Button) findViewById(R.id.addjson);
 
         final TextView _id = (TextView) findViewById(R.id.field_idvalue);
         final TextView pop = (TextView) findViewById(R.id.fieldpopvalue);
@@ -53,21 +48,11 @@ public class JSONActivity extends Activity {
 
 
 
-        _id.setText("11101");
-        city.setText("ASTORIA");
-        state.setText("NY");
-        pop.setText(23142 + "");
-        _lat.setText("-73.939393");
-        _long.setText("40.750316");
-
-
-
-
 
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            addJson();
 
             }
         });
@@ -89,4 +74,11 @@ public class JSONActivity extends Activity {
             }
         });
     }
+
+    private void addJson() {
+
+
+
+    }
+
 }

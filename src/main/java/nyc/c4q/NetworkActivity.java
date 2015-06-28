@@ -16,8 +16,18 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -51,7 +61,7 @@ public class NetworkActivity extends Activity {
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
 
-        new LoadingAsyntask().execute();
+      //  new LoadingAsyntask().execute();
         /*
         The goal is to use AsyncTasks here.
         Shortcut to create URL in Java:
@@ -80,12 +90,14 @@ public class NetworkActivity extends Activity {
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
@@ -111,17 +123,46 @@ public class NetworkActivity extends Activity {
 
     }
 
-    public class LoadingAsyntask extends AsyncTask<Void, Void, > {//TODO missing the 3rd parameter
+    public class LoadingAsyntask extends AsyncTask<String, Void, Boolean > {
 
         @Override
-        protected List<NewsInterface> doInBackground(Void... voids) {
-            return NewsProvider.getInstance().getNews();
+        protected void onPreExecute() {
+            super.onPreExecute();
+
         }
 
         @Override
-        protected void onPostExecute(List<NewsInterface> newsInterfaces) {
-            setListAdapter(new LoadingAdapter(MainActivity.this, newsInterfaces));
+        protected Boolean doInBackground(String... strings) {
+
+            try {
+
+                HttpGet httppost = new HttpGet(urlParams);
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpResponse response = httpclient.execute(httppost);
+
+                // StatusLine stat = response.getStatusLine();
+                int status = response.getStatusLine().getStatusCode();
+
+                if (status == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+
+
+                    JSONObject jsono = new JSONObject(data);
+
+                    return true;
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+
+                e.printStackTrace();
+            }
+            return false;
         }
+
+        }
+
     }
-
-}
