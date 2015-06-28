@@ -39,6 +39,14 @@ public class NotificationActivity extends Activity {
             }
         });
 
+
+        swipenotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showNotification2();
+            }
+        });
+
     }
 
 
@@ -53,12 +61,28 @@ public class NotificationActivity extends Activity {
         Intent resultActivity = new Intent(getApplicationContext(),NotificationActivity.class);
 
         PendingIntent pendingResultActivity =
-                PendingIntent.getActivity(getApplicationContext(), 0,resultActivity,PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.getActivity(getApplicationContext(), 0,resultActivity,PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentIntent(pendingResultActivity);
         Notification notification = builder.build();
         builder.setVisibility(Notification.VISIBILITY_PUBLIC);
         notificationManager.notify(1, notification);
     }
 
+    public void showNotification2(){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setContentTitle("swipe@c4q.nyc");
+        builder.setContentText("Swipe right if you want to meet me. Otherwise, I'm not going away.");
+        builder.setSmallIcon(R.drawable.c4qfavicon);
+
+        Intent resultActivity = new Intent(getApplicationContext(),NotificationActivity.class);
+
+        PendingIntent pendingResultActivity =
+                PendingIntent.getActivity(getApplicationContext(), 0,resultActivity,PendingIntent.FLAG_NO_CREATE);
+        builder.setContentIntent(pendingResultActivity);
+        Notification notification = builder.build();
+        builder.setVisibility(Notification.VISIBILITY_PUBLIC);
+        notificationManager.notify(2, notification);
+    }
 
 }

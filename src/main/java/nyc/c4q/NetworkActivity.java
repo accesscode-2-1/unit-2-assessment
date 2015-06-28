@@ -11,12 +11,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class NetworkActivity extends Activity {
@@ -87,6 +93,32 @@ public class NetworkActivity extends Activity {
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .url(urlParams)
+                        .build();
+
+                Call call = client.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+                        //jSON parsing
+
+                        //update Display
+                        httptextlog.setText(urlParams);
+
+
+                    }
+                });
+
+
             }
         });
 
@@ -115,11 +147,8 @@ public class NetworkActivity extends Activity {
 
         @Override
         protected String doInBackground(String... urls) {
-            try {
-                return downloadUrl(urls[0]);
-            } catch (IOException e) {
-                return "Unable to retrieve web page. URL may be invalid.";
-            }
+
+            return downloadUrl(urls[0]);
         }
 
         @Override
@@ -129,42 +158,34 @@ public class NetworkActivity extends Activity {
         }
     }
 
-    public String downloadUrl(String myurl) throws IOException {
-        InputStream is = null;
-        // Only display the first 500 characters of the retrieved
-        // web page content.
-        int len = 500;
+    public String downloadUrl(String jsonURl){
+            String result = "";
+            try {
+                URL url = new URL(jsonURl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(0);
+                connection.setReadTimeout(0);
 
-        try {
-            URL url = new URL(myurl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            // Starts the query
-            conn.connect();
-            is = conn.getInputStream();
 
-            // Convert the InputStream into a string
-            String contentAsString = readIt(is, len);
-            return contentAsString;
+                InputStream input = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
-        } finally {
-            if (is != null) {
-                is.close();
+                StringBuilder builder = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line + "\n");
+                }
+                result = builder.toString();
+                connection.disconnect();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }
+            return result;
     }
 
-    public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
-        reader.read(buffer);
-        return new String(buffer);
-    }
+
 }
 
