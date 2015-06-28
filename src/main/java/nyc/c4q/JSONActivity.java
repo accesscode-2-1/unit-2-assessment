@@ -59,6 +59,25 @@ public class JSONActivity extends Activity {
             public void onClick(View v) {
 
                 // TODO: get 211 !
+//
+//
+//                JSONObject obj = new JSONObject();
+//                try {
+//                    JSONArray array = obj.getJSONArray("array");
+//                    String zip = array.getString("_id");
+//                    String population = array.getString("pop");
+//                    String jCity = array.getString("city");
+//                    String jState = array.getString("state");
+//                    JSONArray locationArray = obj.getJSONArray("loc");
+//                    String lat = array.getString("0");
+//                    String lon = array.getString("1");
+//
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
 
 
 
