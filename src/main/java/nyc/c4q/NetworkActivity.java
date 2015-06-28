@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -100,6 +104,30 @@ public class NetworkActivity extends Activity {
         });
     }
 
+    public class AsyncOK extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected String doInBackground(Void... params) {
+            OkHttpClient client = new OkHttpClient();
+
+            String.format("https://httpbin.org/get?%s", urlParams);
+            // Create request for remote resource.
+            Request request = new Request.Builder()
+                    .url(urlParams)
+                    .build();
+
+            // Execute the request and retrieve the response.
+            try {
+                Response response = client.newCall(request).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //return response
+        }
+    }
+
+
     public class AsyncTry extends AsyncTask<Void, Void, String>{
 
         @Override
@@ -129,7 +157,7 @@ public class NetworkActivity extends Activity {
             httptextlog.setText(s);
         }
     }
-    
+
         private String readStream(InputStream in) throws IOException {
             char[] buffer = new char[1024 * 4];
             InputStreamReader reader = new InputStreamReader(in, "UTF8");
