@@ -50,6 +50,27 @@ public class NetworkActivity extends Activity {
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
 
+        AsyncTask replaceText = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                httptextlog.setText(urlParams);
+
+                return null;
+            }
+        };
+
+        AsyncTask replaceText2 = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                String replaced = urlParams.replaceAll("\\+"," ");
+                httptextlog.setText(replaced);
+                return null;
+            }
+        };
+        replaceText.execute();
+        replaceText2.execute();
+
+
         /*
         The goal is to use AsyncTasks here.
         Shortcut to create URL in Java:

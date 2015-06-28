@@ -33,14 +33,14 @@ public class Part2NetworkActivityTests {
         networkActivity = Robolectric.buildActivity(NetworkActivity.class).setup().get();
     }
 
-    @Test
+    @Test //DONE
     public void test11AppHasInternetPermissions() {
         AndroidManifest manifest = Robolectric.getShadowApplication().getAppManifest();
         List<String> usedPermissions = manifest.getUsedPermissions();
         assertThat(usedPermissions, hasItem(Manifest.permission.INTERNET));
     }
 
-    @Test
+    @Test // DONE, if 13 passes, this fails.
     public void test12NetworkActivityHTTPUrlConnectionGET() {
         Button httpbinget = (Button) Helpers.findViewByIdString(networkActivity, "httpbinget");
         TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
@@ -49,7 +49,7 @@ public class Part2NetworkActivityTests {
         Assertions.assertThat(httptextlog).containsText(urlParams);
     }
 
-    @Test
+    @Test // DONE, if 12 passes, this fails.
     public void test13NetworkActivityHTTPUrlConnectionGETOKHTTP() throws Exception {
         Button httpbingetokhttp = (Button) Helpers.findViewByIdString(networkActivity, "httpbingetokhttp");
         TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");

@@ -38,14 +38,14 @@ public class Part1ListViewActivityTests {
         listViewActivity = Robolectric.buildActivity(ListViewActivity.class).setup().get();
     }
 
-    @Test
+    @Test //DONE
     public void test01ListViewActvityCheckFirstLevelHas2Views() {
         LinearLayout activity_listview = (LinearLayout) Helpers.findViewByIdString(listViewActivity, "activity_listview");
         assertThat(activity_listview.getChildCount(), equalTo(2));
         Assertions.assertThat(activity_listview).hasOrientation(LinearLayout.VERTICAL);
     }
 
-    @Test
+    @Test //DONE
     public void test02ListViewActivityCheckFirstLevelLayoutViewHeader() {
         LinearLayout header = (LinearLayout) Helpers.findViewByIdString(listViewActivity, "header");
         assertThat(header, notNullValue());
@@ -55,7 +55,7 @@ public class Part1ListViewActivityTests {
         assertThat(((LinearLayout.LayoutParams) header.getLayoutParams()).weight, equalTo(1.0f));
         Assertions.assertThat(header).hasOrientation(LinearLayout.HORIZONTAL);
     }
-    @Test
+    @Test //DONE
     public void test03ListViewActivityCheckFirstLevelLayoutViewList() {
         ListView list = (ListView) Helpers.findViewByIdString(listViewActivity, "list");
         assertThat(list, notNullValue());
@@ -65,7 +65,7 @@ public class Part1ListViewActivityTests {
         assertThat(((LinearLayout.LayoutParams) list.getLayoutParams()).weight, equalTo(9.0f));
     }
 
-    @Test
+    @Test //DONE
     public void test04ListViewActivityCheckSecondLevelLayoutViewTextLog() {
         TextView textLog = (TextView) Helpers.findViewByIdString(listViewActivity, "textLog");
 
@@ -77,7 +77,7 @@ public class Part1ListViewActivityTests {
         Assertions.assertThat(textLog).containsText("You have not clicked anything.");
     }
 
-    @Test
+    @Test //DONE
     public void test05ListViewActivityCheckSecondLevelLayoutViewAdapterCount() {
         EditText adapterCount = (EditText) Helpers.findViewByIdString(listViewActivity, "adapterCount");
 
