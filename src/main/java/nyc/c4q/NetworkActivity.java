@@ -4,25 +4,20 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
+import java.io.IOException;
 
 public class NetworkActivity extends Activity {
 
@@ -73,9 +68,58 @@ public class NetworkActivity extends Activity {
                 https://httpbin.org/post
         */
 
+
+
+        class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
+
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected Boolean doInBackground(String... urls) {
+                try {
+
+                    //------------------>>
+                    HttpGet httppost = new HttpGet(urlParams);
+                    HttpClient httpclient = new DefaultHttpClient();
+                    HttpResponse response = httpclient.execute(httppost);
+
+                    // StatusLine stat = response.getStatusLine();
+                    int status = response.getStatusLine().getStatusCode();
+
+                    if (status == 200) {
+                        HttpEntity entity = response.getEntity();
+                        String data = EntityUtils.toString(entity);
+
+
+                        JSONObject jsono = new JSONObject(data);
+
+                        return true;
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+
+                    e.printStackTrace();
+                }
+                return false;
+            }
+
+            protected void onPostExecute(Boolean result) {
+
+            }
+        }
+
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
