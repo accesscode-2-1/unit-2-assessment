@@ -23,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 public class NetworkActivity extends Activity {
 
@@ -50,6 +51,7 @@ public class NetworkActivity extends Activity {
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
 
+        new LoadingAsyntask().execute();
         /*
         The goal is to use AsyncTasks here.
         Shortcut to create URL in Java:
@@ -72,6 +74,8 @@ public class NetworkActivity extends Activity {
                 -d "comments=Leave it by the garage door. Don't ask any questions." \
                 https://httpbin.org/post
         */
+
+
 
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +107,21 @@ public class NetworkActivity extends Activity {
                 httptextlog.setText("cleared HTTP response");
             }
         });
+
+
     }
 
+    public class LoadingAsyntask extends AsyncTask<Void, Void, > {//TODO missing the 3rd parameter
+
+        @Override
+        protected List<NewsInterface> doInBackground(Void... voids) {
+            return NewsProvider.getInstance().getNews();
+        }
+
+        @Override
+        protected void onPostExecute(List<NewsInterface> newsInterfaces) {
+            setListAdapter(new LoadingAdapter(MainActivity.this, newsInterfaces));
+        }
+    }
 
 }

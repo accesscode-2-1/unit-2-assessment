@@ -42,16 +42,16 @@ public class ListViewActivity extends Activity {
 
     ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, COLORS);
     list.setAdapter(adapter);
-   // list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-//        @Override
-//        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int position = i;
+                String value = (String) list.getItemAtPosition(i);
+                //TODO working on the onClickItem
+            }
+        });
 //
-//            // ListView Clicked item index
-//            int itemPosition = position;
-//
-//            // ListView Clicked item value
-//            String itemValue = (String) list.getItemAtPosition(position);
 //
 //            // Show Alert
 //            Toast.makeText(getApplicationContext(),
