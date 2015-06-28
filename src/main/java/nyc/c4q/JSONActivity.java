@@ -54,9 +54,9 @@ public class JSONActivity extends Activity {
         zipcodes = new ArrayList<Zipcode>();
 
         Zipcode x = new Zipcode(11101);
-        x.setCity("ASTORIA");
-        x.setLoc("-73.939393,40.750316");
-        x.setPop(23142);
+//        x.setCity("ASTORIA");
+//        x.setLoc("-73.939393,40.750316");
+//        x.setPop(23142);
         Zipcode y = new Zipcode(10010);
         Zipcode z = new Zipcode(11121);
         zipcodes.add(x);
@@ -94,15 +94,9 @@ public class JSONActivity extends Activity {
                 for (Zipcode c : zipcodes) {
                     array.put(c);
                 }
-
                 Writer writer = null;
-
-
-
                 try {
-
-                    OutputStream out = new ObjectOutputStream(new FileOutputStream(path));
-
+                    OutputStream out = new ObjectOutputStream(new FileOutputStream(path + "zipcodes.json"));
                     JsonWriter jsonWriter = new JsonWriter(writer);
                     writer = new OutputStreamWriter(out);
                     writer.write(array.toString());
@@ -119,6 +113,7 @@ public class JSONActivity extends Activity {
                     if (writer != null)
                         try {
                             writer.close();
+
                         } catch(Exception e){
 
                         }

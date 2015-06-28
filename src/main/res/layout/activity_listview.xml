@@ -21,6 +21,13 @@
             android:layout_weight="3"
             android:text="You have not clicked anything." />
 
+        <EditText
+            android:id="@+id/adapterCount"
+            android:layout_width="0dp"
+            android:inputType="phone"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 
     <ListView
@@ -28,12 +35,5 @@
         android:layout_width="match_parent"
         android:layout_weight="9"
         android:layout_height="0dp"/>
-
-    <EditText
-        android:id="@+id/adapterCount"
-        android:layout_width="0dp"
-        android:inputType="phone"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
 
 </LinearLayout>
