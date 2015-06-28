@@ -2,7 +2,9 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.text.InputType;
+import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,10 +31,14 @@ public class ListViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview);
         textLog = (TextView) findViewById(R.id.textLog);
+        final ListView list = (ListView) findViewById(R.id.list);
+        EditText adapterCount = (EditText) findViewById(R.id.adapterCount);
 
-        ArrayAdapter<String> colorAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, COLORS);
-        ListView listView = (ListView) findViewById(R.id.list);
-        listView.setAdapter(colorAdapter);
+        ListAdapter adapter = list.getAdapter();
+        adapterCount.length();
+        int i = 0;
+        adapterCount.setText(Integer.toString(i));
+        adapterCount.setInputType(InputType.TYPE_CLASS_PHONE);
+
     }
 }
