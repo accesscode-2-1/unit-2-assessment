@@ -18,6 +18,7 @@ import com.squareup.okhttp.Response;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -50,6 +51,27 @@ public class NetworkActivity extends Activity {
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
 
+        AsyncTask replaceText = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                httptextlog.setText(urlParams);
+
+                return null;
+            }
+        };
+
+        AsyncTask replaceText2 = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                String replaced = urlParams.replaceAll("\\+"," ");
+                httptextlog.setText(replaced);
+                return null;
+            }
+        };
+        replaceText.execute();
+        replaceText2.execute();
+
+
         /*
         The goal is to use AsyncTasks here.
         Shortcut to create URL in Java:
@@ -73,9 +95,16 @@ public class NetworkActivity extends Activity {
                 https://httpbin.org/post
         */
 
+        final String newUrl = "https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don%27t+ask+any+questions.";
+        
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    httptextlog.setText(run(newUrl));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -102,6 +131,16 @@ public class NetworkActivity extends Activity {
             public void onClick(View v) {
                 httptextlog.setText("cleared HTTP response");
             }
-        });
+        });}
+
+        public String run(String url) throws IOException {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+
     }
+
 }

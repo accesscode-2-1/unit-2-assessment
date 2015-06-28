@@ -33,7 +33,7 @@ public class Part2NetworkActivityTests {
         networkActivity = Robolectric.buildActivity(NetworkActivity.class).setup().get();
     }
 
-    @Test
+    @Test //DONE
     public void test11AppHasInternetPermissions() {
         AndroidManifest manifest = Robolectric.getShadowApplication().getAppManifest();
         List<String> usedPermissions = manifest.getUsedPermissions();
