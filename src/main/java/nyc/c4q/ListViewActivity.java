@@ -19,11 +19,23 @@ public class ListViewActivity extends Activity {
             "#bf538d"
     };
     public TextView textLog;
+    //ListView listOfColors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview);
         textLog = (TextView) findViewById(R.id.textLog);
+
+        //listOfColors = (ListView) findViewById(R.id.list);
+        //ArrayList<String> colors = new ArrayList<String>();
+
+
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(ListViewActivity.this, R.layout.listview_tile,COLORS);
+        //listOfColors.setAdapter(adapter);
+
+
     }
+
+
 }
