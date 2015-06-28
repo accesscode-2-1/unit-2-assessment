@@ -42,7 +42,7 @@ public class ListViewActivity extends Activity {
         textLog = (TextView) findViewById(R.id.textLog);
         ListView list = (ListView) findViewById(R.id.list);
         EditText adapterCount = (EditText) findViewById(R.id.adapterCount);
-        
+
         ListAdapter adapter = new MyAdapter(this,COLORS);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,5 +70,6 @@ public class ListViewActivity extends Activity {
             convertView.setBackground(colorDrawable);
             return convertView;
         }
+
     }
 }
