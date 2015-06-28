@@ -1,6 +1,7 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -11,8 +12,12 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +58,23 @@ public class JSONActivity extends Activity {
             public void onClick(View v) {
                 File directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
+                String json =
+                    _id.getText().toString() +
+                    pop.getText().toString() +
+                    city.getText().toString() +
+                    state.getText().toString() +
+                    _lat.getText().toString() +
+                    _long.getText().toString();
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(file);
+                    fileOutputStream.write(json.getBytes());
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
