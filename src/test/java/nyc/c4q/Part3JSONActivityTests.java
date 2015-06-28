@@ -94,6 +94,7 @@ public class Part3JSONActivityTests {
 
         //TODO un-hack
         String result = gson.toJson(jsonActivity.zipcodes.get(0), Zipcode.class);
+        System.out.println(result);
         assertThat(result, containsString("\"_id\":\"11101\""));
         assertThat(result, containsString("\"pop\":23142"));
         assertThat(result, containsString("\"city\":\"ASTORIA\""));
@@ -151,12 +152,11 @@ public class Part3JSONActivityTests {
         loadjson.callOnClick();
 
         String result = gson.toJson(jsonActivity.zipcodes.get(0), Zipcode.class);
-
+        System.out.println(result);
         assertThat(result, containsString("\"_id\":\"11101\""));
         assertThat(result, containsString("\"pop\":23142"));
         assertThat(result, containsString("\"city\":\"ASTORIA\""));
         assertThat(result, containsString("\"state\":\"NY\""));
         assertThat(result, containsString("\"loc\":[-73.939393,40.750316]"));
     }
-
 }

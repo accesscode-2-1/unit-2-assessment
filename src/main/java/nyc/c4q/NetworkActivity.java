@@ -1,6 +1,7 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -16,13 +17,25 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 public class NetworkActivity extends Activity {
 
@@ -34,6 +47,7 @@ public class NetworkActivity extends Activity {
     public Button httpbinpost;
     public Button httpbinpostokhttp;
     public Button cleartextlog;
+    public String input;
     final public String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
 
     // Code ===========================
@@ -76,15 +90,16 @@ public class NetworkActivity extends Activity {
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                httptextlog.setText(urlParams);
+                httptextlog.setText(String.format("https://httpbin.org/get?%s", urlParams));
             }
         });
 
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String replaced = urlParams.replaceAll("\\+"," ");
-                httptextlog.setText(replaced);
+//                String replaced = urlParams.replaceAll("\\+"," ");
+//                httptextlog.setText(replaced);
+                AsyncTask get = new NetworkAsync();
             }
         });
 
@@ -106,5 +121,42 @@ public class NetworkActivity extends Activity {
                 httptextlog.setText("cleared HTTP response");
             }
         });
+    }
+
+    public class NetworkAsync extends AsyncTask<Void, Void, Void> {
+
+        protected Void doInBackground(Void... empty) {
+            input = readURL();
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            httptextlog.setText(input);
+        }
+
+        public String readURL() {
+            String url = String.format("https://httpbin.org/get?%s", urlParams);
+
+            StringBuilder builder = new StringBuilder();
+            HttpClient client = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(url);
+            try {
+                org.apache.http.HttpResponse response = client.execute(httpGet);
+                StatusLine statusLine = response.getStatusLine();
+                int statusCode = statusLine.getStatusCode();
+                if (statusCode == 200) {
+                    HttpEntity entity = response.getEntity();
+                    InputStream content = entity.getContent();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        builder.append(line);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return builder.toString();
+        }
     }
 }

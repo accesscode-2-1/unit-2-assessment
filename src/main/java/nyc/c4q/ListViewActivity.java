@@ -26,10 +26,12 @@ public class ListViewActivity extends Activity {
             "#fa5e5b",
             "#bf538d"
     };
+
     public TextView textLog;
     public ArrayAdapter<String> adapter;
     public ListView listView;
     public EditText adapterCount;
+    public int lastCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class ListViewActivity extends Activity {
         textLog = (TextView) findViewById(R.id.textLog);
         listView = (ListView) findViewById(R.id.list);
         adapterCount = (EditText) findViewById(R.id.adapterCount);
+        lastCount = 10;
+        adapterCount.setText("10");
 
         adapter = new ArrayAdapter<String>(this, R.layout.listview_tile, R.id.title, COLORS) {
             @Override
@@ -46,7 +50,15 @@ public class ListViewActivity extends Activity {
                 view.setBackgroundColor(Color.parseColor(COLORS[position]));
                 return view;
             }
+
+            @Override
+            public int getCount() {
+                if (adapterCount.getText().toString().matches("[0-9]+"))
+                    lastCount = Integer.valueOf(adapterCount.getText().toString());
+                return lastCount;
+            }
         };
+
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,7 +68,11 @@ public class ListViewActivity extends Activity {
                 textLog.setText("You clicked on Item(position=" + position + ", color=" + color + ")");
             }
         });
+    }
 
-
+    public static String[] increaseArray(String[] array, int size){
+        String[] newArray = new String[size];
+        System.arraycopy(array, 0, newArray, 0, array.length);
+        return newArray;
     }
 }
