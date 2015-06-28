@@ -25,4 +25,5 @@ android:
 script: ./gradlew clean test
 
 after_script:
+    - echo "upload TEST results to following link:"
     - curl --upload-file build/reports/tests/debug/index.html https://transfer.sh/index.html
