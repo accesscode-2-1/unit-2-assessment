@@ -56,17 +56,32 @@ public class JSONActivity extends Activity {
                 File directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
 
+                try{
+                    FileOutputStream fout = new FileOutputStream(file);
 
+                    for(Zipcode zipcode : zipcodes) {
 
+                       String full = zipcode.toString();
+                        fout.write(full.getBytes());
+                        fout.close();
+                    }
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+            }
         });
-
 
         loadjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 File directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
+
+
             }
         });
     }
+
 }

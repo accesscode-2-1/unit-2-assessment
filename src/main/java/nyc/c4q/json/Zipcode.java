@@ -47,4 +47,10 @@ public class Zipcode {
     public void setState(String state) {
         this.state = state;
     }
+
+
+    @Override
+    public String toString() {
+        return "\"_id\":\"" + get_id()+"\"" + "\"pop\":" + getPop()+ "\"city\":\""+getCity()+"\"" + "\"state\":\""+getState()+"\"" + "\"loc\":["+loc[0] +"," + loc[1]+ "]";
+    }
 }
