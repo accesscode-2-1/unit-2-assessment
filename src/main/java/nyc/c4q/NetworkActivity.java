@@ -4,25 +4,16 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
 
 public class NetworkActivity extends Activity {
 
@@ -50,6 +41,8 @@ public class NetworkActivity extends Activity {
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
 
+
+
         /*
         The goal is to use AsyncTasks here.
         Shortcut to create URL in Java:
@@ -76,6 +69,8 @@ public class NetworkActivity extends Activity {
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AsyncTry async = new AsyncTry();
+                async.execute();
             }
         });
 
@@ -104,4 +99,45 @@ public class NetworkActivity extends Activity {
             }
         });
     }
+
+    public class AsyncTry extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String.format("https://httpbin.org/get?%s", urlParams);
+            String output = null;
+
+            try {
+                URL url = new URL(urlParams);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.connect();
+                output = readStream(connection.getInputStream());
+
+            }
+            catch (Exception e){
+
+            }
+
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            httptextlog.setText(s);
+        }
+    }
+
+        private String readStream(InputStream in) throws IOException {
+            char[] buffer = new char[1024 * 4];
+            InputStreamReader reader = new InputStreamReader(in, "UTF8");
+            StringWriter writer = new StringWriter();
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+            return writer.toString();
+        }
 }
