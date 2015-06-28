@@ -47,7 +47,7 @@ public class NetworkActivity extends Activity {
     public Button httpbinpostokhttp;
     public Button cleartextlog;
     final public String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
-
+    OkHttpClient okHttpClient = new OkHttpClient();
     // Code ===========================
 
     @Override
@@ -113,6 +113,11 @@ public class NetworkActivity extends Activity {
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    httptextlog.setText(okHTTPGet(String.format("https://httpbin.org/get?%s", urlParams)));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -136,6 +141,14 @@ public class NetworkActivity extends Activity {
                 httptextlog.setText("cleared HTTP response");
             }
         });
+    }
+    public String okHTTPGet(String url) throws IOException{
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+        return response.body().string();
     }
     public String postRequest(){
 
