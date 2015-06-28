@@ -36,4 +36,13 @@ HTTP POST request we'll be using:
         -d "comments=Leave it by the garage door. Don't ask any questions." \
         https://httpbin.org/post
 
+### Grading
 
+Do work on each part before trying to get any part in its entirety. In order to pass the exam, you must make an effort in each of the four parts.
+
+* To pass 1, you must use the adapter pattern correctly.
+* To pass 2, you must make the network call off the UI thread.
+* In part 3, focus on tests 18 and 19. To pass, show us you know how to read and write to/from storage.
+* To pass 4, you must use the Notification Builder pattern correctly.
+
+When you are done, go outside and talk to a TA. Even if no tests are passed, the TA can make judgements about your code and determine if you understand this material well enough to move on.
