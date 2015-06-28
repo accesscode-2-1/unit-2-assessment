@@ -1,6 +1,7 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.widget.Button;
@@ -17,7 +18,16 @@ public class NotificationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
+
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification.Builder builder = new  Notification.Builder(NotificationActivity.this);
+        builder.setContentTitle("notification");
+        //builder.setContentText("notification");
+        //builder.setSmallIcon(R.drawable.ic_launcher);
+
+        //builder.setContentIntent(pendingIntent);
+        Notification notification = builder.build();
+        notificationManager.notify(1, notification);
 
         Button autocancelnotification = (Button) findViewById(R.id.autocancelnotification);
         Button swipenotification = (Button) findViewById(R.id.swipenotification);
