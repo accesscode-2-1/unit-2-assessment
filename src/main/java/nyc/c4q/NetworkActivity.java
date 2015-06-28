@@ -68,11 +68,13 @@ public class NetworkActivity extends Activity {
                 -d "comments=Leave it by the garage door. Don't ask any questions." \
                 https://httpbin.org/post
         */
+        final AsyncTask<Object, Void, Void> get = new NetworkAsync();
 
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 httptextlog.setText(String.format("https://httpbin.org/get?%s", urlParams));
+                get.execute();
             }
         });
 
@@ -81,7 +83,7 @@ public class NetworkActivity extends Activity {
             public void onClick(View v) {
 //                String replaced = urlParams.replaceAll("\\+"," ");
 //                httptextlog.setText(replaced);
-                AsyncTask get = new NetworkAsync();
+                AsyncTask<Object, Void, Void> get = new NetworkAsync();
             }
         });
 
@@ -105,9 +107,9 @@ public class NetworkActivity extends Activity {
         });
     }
 
-    public class NetworkAsync extends AsyncTask<Void, Void, Void> {
+    public class NetworkAsync extends AsyncTask<Object, Void, Void> {
 
-        protected Void doInBackground(Void... empty) {
+        protected Void doInBackground(Object... empty) {
             output = readURL();
             return null;
         }
