@@ -118,7 +118,7 @@ public class Part1ListViewActivityTests {
         ListAdapter adapter = list.getAdapter();
         assertThat(adapter.getCount(), equalTo(ListViewActivity.COLORS.length));
 
-        for (int i = 0; i < ListViewActivity.COLORS.length; i++) {
+        for (int i = 0; i < ListViewActivity.COLORS.length ; i++) {
             View itemView = list.getChildAt(i);
             list.performItemClick(itemView, i, adapter.getItemId(i));
             Assertions.assertThat(textLog).containsText(String.format("You clicked on Item(position=%s, color=%s)", i, ListViewActivity.COLORS[i]));
