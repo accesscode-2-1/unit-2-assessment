@@ -45,6 +45,27 @@ public class JSONActivity extends Activity {
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if( !(_id.getText().toString().equals("")
+                        || pop.getText().toString().equals("")
+                        || city.getText().toString().equals("")
+                        || state.getText().toString().equals("")
+                        || _lat.getText().toString().equals("")
+                        || _long.getText().toString().equals("")) ) {
+
+                    Zipcode zipcode = new Zipcode();
+
+                    zipcode.id = _id.getText().toString();
+                    zipcode.pop = pop.getText().toString();
+                    zipcode.city = city.getText().toString();
+                    zipcode.state = state.getText().toString();
+                    String[] loc = {_lat.getText().toString(),_long.getText().toString()};
+                    zipcode.loc = loc;
+
+                    zipcodes.add(zipcode);
+                }
+
+
             }
         });
 
