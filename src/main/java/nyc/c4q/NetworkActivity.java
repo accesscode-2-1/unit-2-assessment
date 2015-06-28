@@ -7,6 +7,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -16,10 +17,18 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -76,12 +85,20 @@ public class NetworkActivity extends Activity {
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MyAsync myAsync = new MyAsync();
+                myAsync.execute(String.format("https://httpbin.org/get?%s", urlParams));
+
+
             }
         });
 
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String replaced = String.format("https://httpbin.org/get?%s", urlParams).replaceAll("\\+"," ");
+                MyAsync myAsync = new MyAsync();
+                myAsync.execute(replaced);
+
             }
         });
 
@@ -97,11 +114,55 @@ public class NetworkActivity extends Activity {
             }
         });
 
+
         cleartextlog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 httptextlog.setText("cleared HTTP response");
             }
         });
+    }
+
+    class MyAsync extends AsyncTask<String, Void, String> {
+
+        protected String doInBackground(String... strings) {
+            BufferedReader reader = null;
+            String line;
+
+            URL urlString = null;
+            try {
+                urlString = new URL(strings[0]);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            HttpURLConnection connection = null;
+            try {
+                connection = (HttpURLConnection) urlString.openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            try {
+                reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                while ((line = reader.readLine()) != null) {
+                        stringBuilder.append(line + "\n");
+                    }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String resultString = stringBuilder.toString();
+            return resultString;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            httptextlog = (TextView) findViewById(R.id.httptextlog);
+            httptextlog.setText(result);
+        }
     }
 }
