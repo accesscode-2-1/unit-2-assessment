@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name = "colorArray">
+        <item> <color name = "color1">#142b44</color> </item>
+        <item> <color name = "color2">#1d508d</color> </item>
+        <item> <color name = "color3">#297cbb</color> </item>
+        <item> <color name = "color4">#288ad6</color> </item>
+        <item> <color name = "color5">#0fdebd</color> </item>
+        <item> <color name = "color6">#16c98d</color> </item>
+        <item> <color name = "color7">#feef6d</color> </item>
+        <item> <color name = "color8">#ffc83f</color> </item>
+        <item> <color name = "color9">#fa5e5b</color> </item>
+        <item> <color name = "color10">#bf538d</color> </item>
+    </array>
+</resources>

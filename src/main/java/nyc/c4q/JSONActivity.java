@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class JSONActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_json);
+        final String JSON_ZIPCODE = "{\"_id\":\"11101\",\"city\":\"ASTORIA\",\"loc\":[-73.939393,40.750316],\"pop\":23142,\"state\":\"NY\"}";
 
         zipcodes = new ArrayList<Zipcode>();
 
@@ -35,7 +38,8 @@ public class JSONActivity extends Activity {
         final TextView _long = (TextView) findViewById(R.id.fieldloclongvalue);
 
 
-        Zipcode z = new Zipcode();
+        Gson gson = new Gson();
+        Zipcode z = gson.fromJson(JSON_ZIPCODE,Zipcode.class);
 
         z.setId("11101");
         z.setCity("ASTORIA");

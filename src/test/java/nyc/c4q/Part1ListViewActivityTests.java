@@ -89,7 +89,7 @@ public class Part1ListViewActivityTests {
         assertThat(adapterCount.getInputType(), equalTo(InputType.TYPE_CLASS_PHONE));
     }
 
-    @Test
+    @Test //DONE
     public void test06ListViewActivityCheckAdapterCount() {
         ListView list = (ListView) Helpers.findViewByIdString(listViewActivity, "list");
         ListAdapter adapter = list.getAdapter();
