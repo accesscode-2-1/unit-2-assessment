@@ -8,11 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Response;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -40,7 +43,7 @@ public class NetworkActivity extends Activity {
 
         final String url = String.format("https://httpbin.org/get?%s", urlParams);
 
-        // TODO: works when activity runs on phone, but no response when runs through test??
+        // TODO: works when activity runs on phone, but RuntimeException when running through test??
         /*
         The goal is to use AsyncTasks here.
         Shortcut to create URL in Java:
@@ -76,7 +79,23 @@ public class NetworkActivity extends Activity {
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    final String url = String.format("https://httpbin.org/get?%s", urlParams);
+                    HttpUtil httpUtil = new HttpUtil();
+                    httpUtil.get(url, new HttpUtil.HttpCallback() {
+                        @Override
+                        public void onFailure(Response response, IOException throwable) {
+                            // handle failure
+                        }
 
+                        @Override
+                        public void onSuccess(Response response) {
+                            httptextlog.setText(response.toString());
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -132,3 +151,5 @@ public class NetworkActivity extends Activity {
         }
     }
 }
+
+
