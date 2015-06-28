@@ -1,8 +1,12 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.view.View;
 import android.widget.Button;
 
 public class NotificationActivity extends Activity {
@@ -25,5 +29,21 @@ public class NotificationActivity extends Activity {
         Button dismisspermanentnotification = (Button) findViewById(R.id.dismisspermanentnotification);
         Button buttonnotification = (Button) findViewById(R.id.buttonnotification);
 
+
+
+        autocancelnotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(NotificationActivity.this)
+                                .setSmallIcon(R.drawable.c4qfavicon)
+                                .setContentTitle("default@c4q.nyc")
+                                .setContentText("Touch me to dismiss me!");
+                notificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                Notification notification=mBuilder.build();
+                notification.flags =Notification.DEFAULT_LIGHTS|Notification.FLAG_AUTO_CANCEL;
+                notificationManager.notify(1, notification);
+            }
+        });
     }
 }
