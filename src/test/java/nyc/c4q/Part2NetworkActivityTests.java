@@ -14,7 +14,6 @@ import org.robolectric.AndroidManifest;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.util.ActivityController;
 
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class Part2NetworkActivityTests {
     @Test
     public void test14Missing() {
         // TODO
-        // FREE question for now.
+        // FREE question for now.  Thank You :D
     }
 
     @Test

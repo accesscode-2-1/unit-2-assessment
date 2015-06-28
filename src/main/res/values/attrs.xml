@@ -1,4 +1,5 @@
 <resources>
     <integer name="rowPadding">10</integer>
     <dimen name="rowPadding">10dp</dimen>
+    <color name="sage">#cceebb</color>
 </resources>

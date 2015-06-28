@@ -105,8 +105,8 @@ public class Part1ListViewActivityTests {
         for (int i = 0; i < ListViewActivity.COLORS.length; i++) {
             View v = adapter.getView(i, null, list);
             assertThat(v, notNullValue());
-            assertThat(v.getBackground(), instanceOf(ColorDrawable.class));
-            ColorDrawable background = (ColorDrawable) v.getBackground();
+            assertThat(v.getBackground(), instanceOf(ColorDrawable.class));  //Does this mean to use the ColorDrawable tool?
+            ColorDrawable background = (ColorDrawable) v.getBackground();    //was I suppose to make a drawable?
             assertThat(background.getColor(), equalTo(Color.parseColor(ListViewActivity.COLORS[i])));
         }
     }

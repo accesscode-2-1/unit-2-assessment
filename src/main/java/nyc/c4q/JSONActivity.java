@@ -2,8 +2,6 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,12 +9,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import nyc.c4q.json.Zipcode;
 
@@ -29,11 +23,15 @@ public class JSONActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_json);
 
+        Gson gson = new Gson();
+
+
         zipcodes = new ArrayList<Zipcode>();
 
         Button savejson = (Button) findViewById(R.id.savejson);
         Button loadjson = (Button) findViewById(R.id.loadjson);
         Button addjson = (Button) findViewById(R.id.addjson);
+
 
         final TextView _id = (TextView) findViewById(R.id.field_idvalue);
         final TextView pop = (TextView) findViewById(R.id.fieldpopvalue);
@@ -45,6 +43,7 @@ public class JSONActivity extends Activity {
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
