@@ -3,6 +3,7 @@ package nyc.c4q;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.widget.Button;
 
 public class NotificationActivity extends Activity {
@@ -25,5 +26,17 @@ public class NotificationActivity extends Activity {
         Button dismisspermanentnotification = (Button) findViewById(R.id.dismisspermanentnotification);
         Button buttonnotification = (Button) findViewById(R.id.buttonnotification);
 
+        permanentnotification.callOnClick();
+    }
+
+    public void createPermanentNotification() {
+        NotificationCompat.Builder permanent =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.c4qfavicon)
+                        .setContentTitle("permanent@c4q.nyc")
+                        .setContentText("I'm staying planted right here.")
+                        .setOngoing(true);
+
+        permanent.notify();
     }
 }
