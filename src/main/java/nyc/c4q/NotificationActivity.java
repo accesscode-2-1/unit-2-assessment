@@ -31,6 +31,7 @@ public class NotificationActivity extends Activity {
         autocancelnotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 NotificationCompat.Builder _default = new NotificationCompat.Builder(NotificationActivity.this);
                 _default.setContentTitle("default@c4q.nyc");
                 _default.setContentText("Touch me to dismiss me!");

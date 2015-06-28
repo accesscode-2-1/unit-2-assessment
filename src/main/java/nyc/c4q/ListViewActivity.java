@@ -57,6 +57,7 @@ public class ListViewActivity extends Activity {
                     lastCount = Integer.valueOf(adapterCount.getText().toString());
                 return lastCount;
             }
+
         };
 
         listView.setAdapter(adapter);
