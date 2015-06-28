@@ -23,3 +23,6 @@ android:
     #- sys-img-x86-android-17
 
 script: ./gradlew clean test
+
+after_script:
+    - curl --upload-file build/reports/tests/debug/index.html https://transfer.sh/index.html
