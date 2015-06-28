@@ -9,20 +9,32 @@
 
     <LinearLayout
         android:id="@+id/header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1.0">
+
+        <EditText
+            android:id="@+id/adapterCount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:inputType="phone"
+            android:ems="10"/>
 
         <TextView
             android:id="@+id/textLog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fill this textview" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.0"
+            android:text="You have not clicked anything." />
+
 
     </LinearLayout>
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9.0"/>
 </LinearLayout>
