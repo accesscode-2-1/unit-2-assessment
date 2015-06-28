@@ -10,9 +10,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,9 +48,40 @@ public class JSONActivity extends Activity {
         final TextView _lat = (TextView) findViewById(R.id.fieldloclatvalue);
         final TextView _long = (TextView) findViewById(R.id.fieldloclongvalue);
 
+
+
+
+
+
         addjson.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
+                // TODO: get 211 !
+//
+//
+//                JSONObject obj = new JSONObject();
+//                try {
+//                    JSONArray array = obj.getJSONArray("array");
+//                    String zip = array.getString("_id");
+//                    String population = array.getString("pop");
+//                    String jCity = array.getString("city");
+//                    String jState = array.getString("state");
+//                    JSONArray locationArray = obj.getJSONArray("loc");
+//                    String lat = array.getString("0");
+//                    String lon = array.getString("1");
+//
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
+
+
+
+
             }
         });
 
