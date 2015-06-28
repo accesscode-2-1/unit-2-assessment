@@ -4,29 +4,19 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
+import java.io.InputStreamReader;
 
 public class NetworkActivity extends Activity {
-
-    // Fields ===========================
 
     public TextView httptextlog;
     public Button httpbinget;
@@ -35,8 +25,6 @@ public class NetworkActivity extends Activity {
     public Button httpbinpostokhttp;
     public Button cleartextlog;
     final public String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
-
-    // Code ===========================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +38,9 @@ public class NetworkActivity extends Activity {
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
 
+        final String url = String.format("https://httpbin.org/get?%s", urlParams);
+
+        // TODO: works when activity runs on phone, but no response when runs through test??
         /*
         The goal is to use AsyncTasks here.
         Shortcut to create URL in Java:
@@ -73,15 +64,19 @@ public class NetworkActivity extends Activity {
                 https://httpbin.org/post
         */
 
+
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new AsyncGet().execute(url);
+
             }
         });
 
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
@@ -94,6 +89,8 @@ public class NetworkActivity extends Activity {
         httpbinpostokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
             }
         });
 
@@ -103,5 +100,35 @@ public class NetworkActivity extends Activity {
                 httptextlog.setText("cleared HTTP response");
             }
         });
+    }
+
+    private class AsyncGet extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            for (String url : urls) {
+                DefaultHttpClient client = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet(url);
+                try {
+                    HttpResponse execute = client.execute(httpGet);
+                    InputStream content = execute.getEntity().getContent();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            httptextlog.setText(result);
+        }
     }
 }
