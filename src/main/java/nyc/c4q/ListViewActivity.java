@@ -74,8 +74,6 @@ public class ListViewActivity extends Activity {
             }
         });
 
-
-
         numOfItems.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
@@ -86,17 +84,20 @@ public class ListViewActivity extends Activity {
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                 String text = numOfItems.getText().toString();
                 int defaultAmount = 0;
-                try {
-                    if(text.equals("")){
+
+                    if(text.isEmpty()){
                         itemAmount = 0;
+                        list.setAdapter(new ColorAdapter(getApplicationContext(), COLORS, height, defaultAmount));
                     }else {
+                        try {
                         defaultAmount = Integer.parseInt(text);
                         itemAmount = defaultAmount;
                         list.setAdapter(new ColorAdapter(getApplicationContext(), COLORS, height, defaultAmount));
-                    }
-                }catch(NumberFormatException e){
+                        }catch(NumberFormatException e){
 
-                }
+                        }
+                    }
+
             }
 
             @Override
