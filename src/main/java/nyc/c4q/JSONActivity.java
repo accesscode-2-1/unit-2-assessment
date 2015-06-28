@@ -63,19 +63,27 @@ public class JSONActivity extends Activity {
         savejson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Gson gson = new Gson();
+                Zipcode z = gson.fromJson(JSON_ZIPCODE, Zipcode.class);
+                zipcodes.add(z);
+
                 File directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
+
                 FileOutputStream fout=null;
                 ObjectOutputStream oos=null;
                 try {
-                    fout = new FileOutputStream(file);
-                    PrintWriter pw = new PrintWriter(zipcodes.get(0).toString());
-                    pw.flush();
-                    pw.close();
-                    fout.close();
-                }catch(Exception e){
 
-                }finally {
+                    fout = new FileOutputStream(file);
+                    oos = new ObjectOutputStream(fout);
+                    oos.writeObject(zipcodes.get(0));
+
+                }
+                catch(Exception e){
+
+                }
+                finally {
                     if(fout!=null){
                         try {
                             fout.close();

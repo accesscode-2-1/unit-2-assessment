@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Zipcode implements Serializable{
+public class Zipcode implements Serializable {
 
     @SerializedName("_id")
     public String _id;
@@ -16,6 +16,7 @@ public class Zipcode implements Serializable{
     public int pop;
     @SerializedName("loc")
     public double[] loc;
+
 
     @Override
     public String toString() {
