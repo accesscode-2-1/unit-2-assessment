@@ -1,28 +1,11 @@
 package nyc.c4q;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
 
 public class NetworkActivity extends Activity {
 
@@ -50,7 +33,7 @@ public class NetworkActivity extends Activity {
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
 
-        /*
+        /* TODO: Are we suppose to do this? So Confused!!
         The goal is to use AsyncTasks here.
         Shortcut to create URL in Java:
 
@@ -73,9 +56,13 @@ public class NetworkActivity extends Activity {
                 https://httpbin.org/post
         */
 
+
+        //Todo: Are we Suppose to do this? Fill out the OnClicks?
+
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
@@ -105,3 +92,6 @@ public class NetworkActivity extends Activity {
         });
     }
 }
+
+/*TODO: I know the concepts of GET and POST. Not sure how to use it though. Look at the ServiceHandler.java
+* TODO: For test12- we want to go the GET parts of the URLConnection and for test13- we want to GET the OKHTTP*/

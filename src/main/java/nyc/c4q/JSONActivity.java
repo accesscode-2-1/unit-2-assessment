@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,9 @@ public class JSONActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_json);
+
+        Gson gson = new Gson();
+
 
         zipcodes = new ArrayList<Zipcode>();
 
@@ -38,6 +43,7 @@ public class JSONActivity extends Activity {
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 

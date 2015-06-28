@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = "src/main/AndroidManifest.xml", emulateSdk = 18)
+@Config(manifest = "src/main/AndroidManifest.xml", emulateSdk = 18)          //should I change the SDK at 18?
 public class Part4NotificationActivityTests {
 
     private NotificationActivity notificationActivity;
