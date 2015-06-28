@@ -101,16 +101,9 @@ public class NetworkActivity extends Activity {
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url("https://raw.github.com/square/okhttp/master/README.md")
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
+                Thread thread = new Thread(new getOkHttp());
+                thread.run();
             }
         });
 
@@ -189,6 +182,16 @@ public class NetworkActivity extends Activity {
 
         @Override
         public void run() {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                httptextlog.setText(response.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
