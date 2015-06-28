@@ -14,7 +14,6 @@ import org.robolectric.AndroidManifest;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.util.ActivityController;
 
 import java.util.List;
 
@@ -54,7 +53,6 @@ public class Part2NetworkActivityTests {
         Button httpbingetokhttp = (Button) Helpers.findViewByIdString(networkActivity, "httpbingetokhttp");
         TextView httptextlog = (TextView) Helpers.findViewByIdString(networkActivity, "httptextlog");
         httpbingetokhttp.callOnClick();
-
         String replaced = urlParams.replaceAll("\\+"," ");
         Assertions.assertThat(httptextlog).containsText(replaced);
     }
