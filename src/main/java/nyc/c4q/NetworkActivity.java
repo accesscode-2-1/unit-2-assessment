@@ -15,11 +15,16 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.squareup.okhttp.internal.http.HttpConnection;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -76,12 +81,14 @@ public class NetworkActivity extends Activity {
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new NetworkAsyncTask().execute(String.format("https://httpbin.org/get?%s", urlParams));
             }
         });
 
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new NetworkOKAsyncTask().execute(String.format("https://httpbin.org/get?%s", urlParams));
             }
         });
 
@@ -103,5 +110,64 @@ public class NetworkActivity extends Activity {
                 httptextlog.setText("cleared HTTP response");
             }
         });
+    }
+
+    class NetworkAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                URL url = new URL(strings[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.connect();
+                String output = readStream(connection.getInputStream());
+                return output;
+            }
+            catch (Exception e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            httptextlog.setText(s);
+        }
+    }
+
+    //credits to John
+    private String readStream(InputStream in) throws IOException {
+        char[] buffer = new char[1024 * 4];
+        InputStreamReader reader = new InputStreamReader(in, "UTF8");
+        StringWriter writer = new StringWriter();
+        int n;
+        while ((n = reader.read(buffer)) != -1) {
+            writer.write(buffer, 0, n);
+        }
+        return writer.toString();
+    }
+
+    class NetworkOKAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String output = "";
+            try {
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder().url(strings[0]).build();
+                Response response = client.newCall(request).execute();
+                output = readStream(response.body().byteStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return output;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            httptextlog.setText(s);
+        }
     }
 }
