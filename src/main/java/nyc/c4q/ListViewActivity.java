@@ -2,6 +2,7 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ListViewActivity extends Activity {
@@ -18,12 +19,15 @@ public class ListViewActivity extends Activity {
             "#fa5e5b",
             "#bf538d"
     };
+
     public TextView textLog;
+    public EditText adapterCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview);
         textLog = (TextView) findViewById(R.id.textLog);
+        adapterCount = (EditText) findViewById(R.id.adapterCount);
     }
 }
