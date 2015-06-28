@@ -2,27 +2,25 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import nyc.c4q.json.Zipcode;
 
 public class JSONActivity extends Activity {
 
     public List<Zipcode> zipcodes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +43,25 @@ public class JSONActivity extends Activity {
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                JSONArray jArr = new JSONArray();
+                JSONObject jObj = new JSONObject();
+                try {
+
+                    jObj.put("ID", _id.getText());
+                    jObj.put("pop", pop.getText());
+                    jObj.put("city", city.getText());
+                    jObj.put("state", state.getText());
+                    jObj.put("_lat", _lat.getText());
+                    jObj.put("_long", _lat.getText());
+
+                    jArr.put(jObj);
+
+                } catch (Exception e) {
+                    System.out.println("Error:" + e);
+                }
+
+              
             }
         });
 
@@ -61,8 +78,39 @@ public class JSONActivity extends Activity {
             @Override
             public void onClick(View v) {
                 File directory = getExternalCacheDir();
-                File file = new File(directory, "zipcodes.json");
+                File file = new File(directory, "Zipcodes.json");
             }
         });
+
+
     }
+
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+
+            InputStream is = getAssets().open("json/Zipcode.json");
+
+            int size = is.available();
+
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+
+            is.close();
+
+            json = new String(buffer, "UTF-8");
+
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+
+    }
+
+
+
+
 }
