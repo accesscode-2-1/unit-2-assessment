@@ -2,21 +2,14 @@ package nyc.c4q;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import nyc.c4q.json.Zipcode;
 
@@ -45,6 +38,15 @@ public class JSONActivity extends Activity {
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Zipcode zip = new Zipcode();
+                zip.set_id(_id.getText().toString());
+                zip.setCity(city.getText().toString());
+                double latitude = Double.parseDouble(_lat.getText().toString());
+                double longitude = Double.parseDouble(_long.getText().toString());
+                zip.setLoc(new double[]{latitude, longitude});
+                zip.setPop(Integer.parseInt(pop.getText().toString()));
+                zip.setState(state.getText().toString());
+                zipcodes.add(zip);
             }
         });
 
@@ -53,7 +55,9 @@ public class JSONActivity extends Activity {
             public void onClick(View v) {
                 File directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
-            }
+
+
+
         });
 
 
