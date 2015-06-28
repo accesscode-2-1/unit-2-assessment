@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <color android:name="a">#142b44</color>
+    <color android:name="b">#1d508d</color>
+    <color android:name="c">#297cbb</color>
+    <color android:name="d">#288ad6</color>
+    <color android:name="e">#0fdebd</color>
+    <color android:name="f">#feef6d</color>
+    <color android:name="g">#feef6d</color>
+    <color android:name="h">#ffc83f</color>
+    <color android:name="i">#fa5e5b</color>
+    <color android:name="j">#bf538d</color>
+
+    <array android:name="background">
+        <item>@color/a</item>
+        <item>@color/b</item>
+        <item>@color/c</item>
+        <item>@color/d</item>
+        <item>@color/e</item>
+        <item>@color/f</item>
+        <item>@color/g</item>
+        <item>@color/h</item>
+        <item>@color/i</item>
+        <item>@color/j</item>
+    </array>
+
+</selector>

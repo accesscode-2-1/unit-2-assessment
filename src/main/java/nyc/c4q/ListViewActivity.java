@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import static nyc.c4q.R.color.background;
+
 public class ListViewActivity extends Activity {
 
     public static final String[] COLORS = {
@@ -17,13 +19,25 @@ public class ListViewActivity extends Activity {
             "#ffc83f",
             "#fa5e5b",
             "#bf538d"
+
+
     };
+
+
     public TextView textLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview);
+
         textLog = (TextView) findViewById(R.id.textLog);
+
+
+        for (int i = 0; i < ListViewActivity.COLORS.length; i++)
+        {
+
+
+        }
     }
 }
