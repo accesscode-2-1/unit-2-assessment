@@ -47,8 +47,9 @@ public class ListViewActivity extends Activity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String color = ((TextView)view).toString();
-                textLog.setText("You clicked on Item("+i+ " "+color+")");
+                TextView tv = (TextView) ((ViewGroup)view).getChildAt(0);
+                String color = tv.getText().toString();
+                textLog.setText("You clicked on Item(position="+i+ ", color="+color+")");
             }
         });
     }
