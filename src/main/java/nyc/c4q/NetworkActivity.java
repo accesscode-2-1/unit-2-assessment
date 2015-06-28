@@ -50,28 +50,29 @@ public class NetworkActivity extends Activity {
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
 
-        /*
-        The goal is to use AsyncTasks here.
-        Shortcut to create URL in Java:
-
-            String.format("https://httpbin.org/get?%s", urlParams);
-
-        HTTP GET request we'll be using:
-
-            $ curl "https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don%27t+ask+any+questions."
-
-        HTTP POST request we'll be using:
-
-            $ curl -X POST \
-                -d "custname=james dean" \
-                -d "custtel=347-8431-6090" \
-                -d "custemail=hello@c4q.nyc" \
-                -d "size=small" \
-                -d "topping=cheese" \
-                -d "delivery=22:15" \
-                -d "comments=Leave it by the garage door. Don't ask any questions." \
-                https://httpbin.org/post
-        */
+//        /*
+//        The goal is to use AsyncTasks here.
+//        Shortcut to create URL in Java:
+//
+//
+//            String.format("https://httpbin.org/get?%s", urlParams);
+//
+//        HTTP GET request we'll be using:
+//
+//            $ curl "https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don%27t+ask+any+questions."
+//
+//        HTTP POST request we'll be using:
+//
+//            $ curl -X POST \
+//                -d "custname=james dean" \
+//                -d "custtel=347-8431-6090" \
+//                -d "custemail=hello@c4q.nyc" \
+//                -d "size=small" \
+//                -d "topping=cheese" \
+//                -d "delivery=22:15" \
+//                -d "comments=Leave it by the garage door. Don't ask any questions." \
+//                https://httpbin.org/post
+//        */
 
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -64,5 +64,13 @@ public class JSONActivity extends Activity {
                 File file = new File(directory, "zipcodes.json");
             }
         });
+
+//        addjson.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        })
+//    }
     }
 }
