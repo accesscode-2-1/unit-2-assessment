@@ -11,9 +11,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
@@ -52,20 +54,13 @@ public class JSONActivity extends Activity {
 
 
         addjson.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
-                JSONObject obj = new JSONObject(zips.json);
-
-                JSONArray m_jArry = obj.getJSONArray("formules");
-                ArrayList<HashMap<String, String>> formList= new ArrayList<HashMap<String, String>>();
-                HashMap<String, String> m_li;
+                // TODO: get 211 !
 
 
-                    JSONObject jo_inside = m_jArry.getJSONObject(i);
-                    Log.d("Details-->",jo_inside.getString("formule"));
-                    String formula_value = jo_inside.getString("formule");
-                    String url_value = jo_inside.getString("url");
 
 
             }
