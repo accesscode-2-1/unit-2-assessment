@@ -32,7 +32,7 @@ public class ListViewActivity extends Activity {
         textLog = (TextView) findViewById(R.id.textLog);
 
         ListView list = (ListView) findViewById(R.id.list);
-//        CustomAdapter adapter = new CustomAdapter(this,R.layout.custom_listview,COLORS);
+        //CustomAdapter adapter = new CustomAdapter(this,R.layout.custom_listview,COLORS);
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, COLORS);
         list.setAdapter(adapter);

@@ -17,6 +17,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
 
     String[] listOfColors;
     LayoutInflater inflater;
+
     public CustomAdapter(Context context, int resource, String[] items) {
         super(context, resource);
         listOfColors = items;

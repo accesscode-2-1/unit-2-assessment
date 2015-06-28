@@ -129,7 +129,7 @@ public class NetworkActivity extends Activity {
             httptextlog.setText(s);
         }
     }
-
+    
         private String readStream(InputStream in) throws IOException {
             char[] buffer = new char[1024 * 4];
             InputStreamReader reader = new InputStreamReader(in, "UTF8");
