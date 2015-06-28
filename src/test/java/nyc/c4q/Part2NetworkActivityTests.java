@@ -25,7 +25,8 @@ import static org.hamcrest.Matchers.hasItem;
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = "src/main/AndroidManifest.xml", emulateSdk = 18)
 public class Part2NetworkActivityTests {
-    static final String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
+    static final String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=" +
+            "small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
     private NetworkActivity networkActivity;
 
     @Before
@@ -70,4 +71,5 @@ public class Part2NetworkActivityTests {
         // TODO
         // FREE question for now.
     }
+
 }
