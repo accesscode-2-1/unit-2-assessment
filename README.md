@@ -4,7 +4,7 @@ This is designed to run with Android Studio with
 
 Watch what this app does here: 
 
-> [![unit-2-asssessment](static/unit-2-asssessment.png)](https://vid.me/9eP8)
+> [![unit-2-asssessment](static/unit-2-assessment.png)](https://vid.me/9eP8)
 
 ### Importing
 Import the project into Android Studio by selecting `Import Project` and selecting the project's `build.gradle`. When prompted, you can pick the default gradle wrapper.
