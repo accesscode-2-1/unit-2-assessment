@@ -16,6 +16,10 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -36,7 +40,54 @@ public class NetworkActivity extends Activity {
     public Button cleartextlog;
     final public String urlParams = "custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
 
+
     // Code ===========================
+
+    private static String url = "https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don't+ask+any+questions.";
+
+    //JSON Node Names
+    private static final String comments = "comments";
+    private static final String custemail = "custemail";
+    private static final String custel = "custel";
+    private static final String delivery = "delivery";
+    private static final String size = "size";
+    private static final String topping = "topping";
+
+
+    JSONArray args = null;
+
+    public static String getComments() {
+        return comments;
+    }
+
+    public static String getCustel() {
+        return custel;
+    }
+
+    public static String getCustemail() {
+        return custemail;
+    }
+
+    public static String getDelivery() {
+        return delivery;
+    }
+
+    public static String getSize() {
+        return size;
+    }
+
+    public static String getTopping() {
+        return topping;
+    }
+
+    public static String getUrl() {
+        return url;
+    }
+
+    public static void setUrl(String url) {
+        NetworkActivity.url = url;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +107,9 @@ public class NetworkActivity extends Activity {
 
             String.format("https://httpbin.org/get?%s", urlParams);
 
+
+
+
         HTTP GET request we'll be using:
 
             $ curl "https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don%27t+ask+any+questions."
@@ -72,6 +126,7 @@ public class NetworkActivity extends Activity {
                 -d "comments=Leave it by the garage door. Don't ask any questions." \
                 https://httpbin.org/post
         */
+
 
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +155,39 @@ public class NetworkActivity extends Activity {
         cleartextlog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                httptextlog.setText("cleared HTTP response");
+                httptextlog.setText("httptextlog");
             }
         });
     }
+
+
+    class GetJSONTask extends AsyncTask<String, Void, JSONObject> {
+
+
+
+
+        protected JSONObject doInBackground(String... urls) {
+            // Creating new JSON Parser
+
+
+            // Getting JSON from URL
+            JSONObject json1 = null;
+            try {
+                json1 = new JSONObject((url));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return json1;
+
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+
+
+        }
+    }
+
 }
