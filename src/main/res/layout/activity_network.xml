@@ -7,27 +7,27 @@
 
     <Button
         android:id="@+id/httpbinget"
-        android:text="https://httpbin.org/get"
+        android:text="HTTP GET"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <Button
-        android:id="@+id/httpbinpost"
-        android:text="https://httpbin.org/post"
+        android:id="@+id/httpbingetokhttp"
+        android:text="HTTP GET using OKHTTP"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/httpbinget"/>
     <Button
-        android:id="@+id/httpbingetokhttp"
-        android:text="https://httpbin.org/get okhttp"
+        android:id="@+id/httpbinpost"
+        android:text="bonus HTTP POST"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/httpbinpost"/>
+        android:layout_below="@id/httpbingetokhttp"/>
     <Button
         android:id="@+id/httpbinpostokhttp"
-        android:text="https://httpbin.org/post okhttp"
+        android:text="bonus HTTP POST using OKHTTP"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

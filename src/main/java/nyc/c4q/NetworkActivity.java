@@ -26,81 +26,6 @@ import java.util.ArrayList;
 
 public class NetworkActivity extends Activity {
 
-
-    // Helpers ===========================
-
-    public class HTTPGETTask extends AsyncTask<String, Integer, ArrayList<String>> {
-        protected ArrayList<String> doInBackground(String... urls) {
-            ArrayList<String> results = new ArrayList<String>();
-            // TODO insert code here
-            return results;
-        }
-
-        protected void onPostExecute(ArrayList<String> results) {
-            // TODO insert code here
-        }
-    }
-
-    public class OKHTTPGETTask extends AsyncTask<String, Integer, ArrayList<String>> {
-
-        @Override
-        protected ArrayList<String> doInBackground(String... urls) {
-            ArrayList<String> results = new ArrayList<String>();
-            OkHttpClient client = new OkHttpClient();
-            // TODO insert code here
-            return results;
-        }
-
-        protected void onPostExecute(ArrayList<String> results) {
-            // TODO insert code here
-        }
-    }
-
-    public class HTTPPOSTTask extends AsyncTask<URLAndURLParams, Integer, ArrayList<String>> {
-
-        @Override
-        protected ArrayList<String> doInBackground(URLAndURLParams... urls) {
-            ArrayList<String> results = new ArrayList<String>();
-            // TODO insert code here
-            return results;
-        }
-
-        protected void onPostExecute(ArrayList<String> results) {
-            // TODO insert code here
-        }
-    }
-
-    public class OKHTTPPOSTTask extends AsyncTask<URLAndURLParams, Integer, ArrayList<String>> {
-
-        @Override
-        protected ArrayList<String> doInBackground(URLAndURLParams... urls) {
-            ArrayList<String> results = new ArrayList<String>();
-            OkHttpClient client = new OkHttpClient();
-            // TODO insert code here
-            return results;
-        }
-
-        protected void onPostExecute(ArrayList<String> results) {
-            // TODO insert code here
-        }
-    }
-
-    public static class URLAndURLParams {
-        public String url;
-        public String urlParams;
-
-        public URLAndURLParams(String url, String urlParams) {
-            this.url = url;
-            this.urlParams = urlParams;
-        }
-    }
-
-    //http://stackoverflow.com/a/5445161/198348
-    public static String convertStreamToString(java.io.InputStream is) {
-        java.util.Scanner s = new java.util.Scanner(is, "UTF-8").useDelimiter("\\A");
-        return s.hasNext() ? s.next() : "";
-    }
-
     // Fields ===========================
 
     public TextView httptextlog;
@@ -125,31 +50,50 @@ public class NetworkActivity extends Activity {
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
 
+        /*
+        The goal is to use AsyncTasks here.
+        Shortcut to create URL in Java:
+
+            String.format("https://httpbin.org/get?%s", urlParams);
+
+        HTTP GET request we'll be using:
+
+            $ curl "https://httpbin.org/get?custname=james+dean&custtel=347-841-6090&custemail=hello%40c4q.nyc&size=small&topping=cheese&delivery=18%3A15&comments=Leave+it+by+the+garage+door.+Don%27t+ask+any+questions."
+
+        HTTP POST request we'll be using:
+
+            $ curl -X POST \
+                -d "custname=james dean" \
+                -d "custtel=347-8431-6090" \
+                -d "custemail=hello@c4q.nyc" \
+                -d "size=small" \
+                -d "topping=cheese" \
+                -d "delivery=22:15" \
+                -d "comments=Leave it by the garage door. Don't ask any questions." \
+                https://httpbin.org/post
+        */
+
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HTTPGETTask().execute("https://httpbin.org/get" + "?" + urlParams);
             }
         });
 
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new OKHTTPGETTask().execute("https://httpbin.org/get" + "?" + urlParams);
             }
         });
 
         httpbinpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HTTPPOSTTask().execute(new URLAndURLParams("https://httpbin.org/post", urlParams));
             }
         });
 
         httpbinpostokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new OKHTTPPOSTTask().execute(new URLAndURLParams("https://httpbin.org/post", urlParams));
             }
         });
 
