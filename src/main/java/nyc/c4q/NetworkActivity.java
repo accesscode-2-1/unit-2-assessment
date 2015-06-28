@@ -3,6 +3,7 @@ package nyc.c4q;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +50,33 @@ public class NetworkActivity extends Activity {
         cleartextlog = (Button) findViewById(R.id.cleartextlog);
         httptextlog = (TextView) findViewById(R.id.httptextlog);
         httptextlog.setMovementMethod(new ScrollingMovementMethod());
+
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                httpbinget.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        httptextlog.setText(urlParams);
+                    }
+                });
+            }
+        });
+
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        httptextlog.setText(urlParams.replaceAll("\\+"," "));
+                    }
+                });
+            }
+        });
+
 
         /*
         The goal is to use AsyncTasks here.
