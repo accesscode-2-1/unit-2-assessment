@@ -3,6 +3,8 @@ package nyc.c4q;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Message;
+import android.util.JsonWriter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -32,7 +36,7 @@ import nyc.c4q.json.Zipcode;
 public class JSONActivity extends Activity {
 
     public List<Zipcode> zipcodes;
-    String result;
+    String json;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +59,18 @@ public class JSONActivity extends Activity {
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result = "\"_id\":\"" + _id.getText() + "\"" + "\"pop\":" + pop.getText() +
-                        "\"city\":\"" + city.getText() + "\"" + "\"state\":\"" + state.getText() + "\"" +
-                        "\"loc\":[" + _lat.getText() + "," + _long.getText() + "]";
+                try {
+                    JSONObject jsonObj = new JSONObject();
+                    jsonObj.put("_id", _id.getText().toString());
+                    jsonObj.put("pop", pop.getText().toString());
+                    jsonObj.put("city", city.getText().toString());
+                    jsonObj.put("state", state.getText().toString());
+                    jsonObj.put("loc", "[" + _lat.getText() + "," + _long.getText() + "]");
+
+                    json = jsonObj.toString();
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -67,9 +80,10 @@ public class JSONActivity extends Activity {
                 File directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
                 FileOutputStream outputStream;
+
                 try {
                     outputStream = new FileOutputStream(file);
-                    outputStream.write(result.getBytes());
+                    outputStream.write(json.getBytes());
                     outputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -77,49 +91,46 @@ public class JSONActivity extends Activity {
             }
         });
 
-
         loadjson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 File directory = getExternalCacheDir();
                 File file = new File(directory, "zipcodes.json");
-                String json = "";
-
+                String readfile = "";
                 try {
-                    FileReader fReader = new FileReader(file);
-                    BufferedReader bReader = new BufferedReader(fReader);
-                    StringBuilder text = new StringBuilder();
-
-                    while ((json = bReader.readLine()) != null) {
-                        text.append(json + "\n");
+                    FileReader fr = new FileReader(file);
+                    BufferedReader br = new BufferedReader(fr);
+                    String s;
+                    while ((s = br.readLine()) != null) {
+                        readfile += s;
                     }
+                    fr.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                JSONObject reader = null;
+                JSONArray reader = null;
                 try {
-                    reader = new JSONObject(json);
-                    String parseID = reader.getString("_id");
-                    String parsePOP = reader.getString("pop");
-                    String parseCITY = reader.getString("city");
-                    String parseSTATE = reader.getString("state");
-                    String parseLOC = reader.getString("loc");
-                    parseLOC = parseLOC.substring(1, parseLOC.length()-1);
-                    String parseLAT = parseLOC.split(",");
-                    String parseLONG = parseLOC.substring(12, 21);
+                    reader = new JSONArray(readfile);
+                    JSONObject one = reader.getJSONObject(0);
+                    String parseID = one.getString("_id");
+                    String parsePOP = one.getString("pop");
+                    String parseCITY = one.getString("city");
+                    String parseSTATE = one.getString("state");
+                    String parseLOC = one.getString("loc");
+                    parseLOC = parseLOC.substring(1, parseLOC.length() - 1);
+                    List<String> locArray = Arrays.asList(parseLOC.split(","));
 
                     _id.setText(parseID);
                     pop.setText(parsePOP);
                     city.setText(parseCITY);
                     state.setText(parseSTATE);
-                    _lat.setText(parseLAT);
-                    _long.setText(parseLONG);
+                    _lat.setText(locArray.get(0));
+                    _long.setText(locArray.get(1));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-
     }
 }

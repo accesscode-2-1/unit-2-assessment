@@ -129,10 +129,10 @@ public class Part3JSONActivityTests {
 
         // TODO un-hack
         assertThat(results, containsString("\"_id\":\"11101\""));
-        assertThat(results, containsString("\"pop\":23142"));
+        assertThat(results, containsString("\"pop\":\"23142\""));
         assertThat(results, containsString("\"city\":\"ASTORIA\""));
         assertThat(results, containsString("\"state\":\"NY\""));
-        assertThat(results, containsString("\"loc\":[-73.939393,40.750316]"));
+        assertThat(results, containsString("\"loc\":\"[-73.939393,40.750316]\""));
     }
 
     @Test
