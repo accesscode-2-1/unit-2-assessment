@@ -56,5 +56,22 @@ public class NotificationActivity extends Activity {
             }
         });
 
+        swipenotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NotificationManager notificationManager = (NotificationManager) getSystemService(
+                        Context.NOTIFICATION_SERVICE);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+
+                builder.setContentTitle("swipe@c4q.nyc")
+                        .setContentText("Swipe right if you want to meet me. Otherwise, I'm not going away.")
+                        .setSmallIcon(R.drawable.c4qfavicon);
+
+                Notification notification = builder.build();
+
+                notificationManager.notify(1, notification);
+            }
+        });
+
     }
 }
