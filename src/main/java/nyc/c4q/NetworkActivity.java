@@ -1,6 +1,8 @@
 package nyc.c4q;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
@@ -16,8 +20,11 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -76,12 +83,15 @@ public class NetworkActivity extends Activity {
         httpbinget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                httptextlog.setText(urlParams);
             }
         });
 
         httpbingetokhttp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String replaced = urlParams.replaceAll("\\+"," ");
+                httptextlog.setText(replaced);
             }
         });
 
@@ -100,7 +110,7 @@ public class NetworkActivity extends Activity {
         cleartextlog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                httptextlog.setText("cleared HTTP response");
+                httptextlog.setText(urlParams);
             }
         });
     }

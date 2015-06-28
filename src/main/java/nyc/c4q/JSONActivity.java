@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -41,6 +45,21 @@ public class JSONActivity extends Activity {
         final TextView state = (TextView) findViewById(R.id.fieldstatevalue);
         final TextView _lat = (TextView) findViewById(R.id.fieldloclatvalue);
         final TextView _long = (TextView) findViewById(R.id.fieldloclongvalue);
+
+        JSONArray address = new JSONArray(zipcodes);
+            for (int i = 0; i < address.length(); i++) {
+                try {
+                    JSONObject info = address.getJSONObject(i);
+                    Zipcode data = new Zipcode();
+                    data.set_id(info.getString("_id"));
+                    data.setCity(info.getString("city"));
+                    data.setState(info.getString("state"));
+                    data.setPop(info.getInt("pop"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
         addjson.setOnClickListener(new View.OnClickListener() {
             @Override
